@@ -1,5 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+import { useAuth } from "./contexts/Auth";
+
 import RootLayout from "./components/layouts/RootLayout";
 import PrivateRoute from "./components/PrivateRoute";
 
@@ -10,6 +12,8 @@ import UserRecipes from "./pages/user/recipes";
 import NotFound from "./pages/404";
 
 function App() {
+  const { user } = useAuth();
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -20,19 +24,12 @@ function App() {
           element: <Home />,
           index: true,
         },
-      ],
-    },
-    {
-      path: "/:username",
-      element: <RootLayout />,
-      children: [
         {
-          path: "recipes",
+          path: "/:username/recipes",
           element: <PrivateRoute component={UserRecipes} />,
         },
       ],
     },
-
     {
       path: "/login",
       element: <Login />,
