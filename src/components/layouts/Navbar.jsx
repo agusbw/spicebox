@@ -63,7 +63,7 @@ export default function Navbar() {
             className="p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
           >
             <li>
-              <Link to={`/${user.user_metadata.username}/recipes`}>
+              <Link to={`/${user?.user_metadata.username}/recipes`}>
                 My Recipes
               </Link>
             </li>
