@@ -1,14 +1,20 @@
 import profile from "../../assets/profile.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/Auth";
+import { useEffect } from "react";
 
 export default function Navbar() {
   const navigate = useNavigate();
   const { user, signOut } = useAuth();
 
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [signOut, user, navigate]);
+
   const handleSignOut = async () => {
     await signOut();
-    navigate("/login");
   };
 
   const handleSignIn = () => {
