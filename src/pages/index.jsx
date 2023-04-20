@@ -25,8 +25,8 @@ export default function Home() {
               </span>
               , your go-to destination for all things culinary. We believe that
               cooking should be a fun and enjoyable experience for everyone,
-              which is why we've curated a collection of delicious recipes that
-              are sure to delight your taste buds.
+              which is why we&apos;ve curated a collection of delicious recipes
+              that are sure to delight your taste buds.
             </p>
             <div className="flex justify-center lg:block">
               <Link to="/recipes" className="btn btn-secondary rounded-full">
