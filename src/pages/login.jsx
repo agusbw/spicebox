@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import InputErrorMessage from "../components/InputErrorMessage";
+import { TextInput } from "../components/FormComponents";
 import { useState } from "react";
 import { useAuth } from "../contexts/Auth";
 import loginImage from "../assets/login.webp";
-import TextInput from "../components/TextInput";
 
 export default function Login() {
   const {
