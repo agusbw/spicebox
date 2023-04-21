@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import InputErrorMessage from "../components/InputErrorMessage";
 import { useAuth } from "../contexts/Auth";
-import TextInput from "../components/TextInput";
+import { TextInput } from "../components/FormComponents";
 import loginImage from "../assets/login.webp";
 import { useState } from "react";
 import useUser from "../hooks/useUser";
