@@ -10,21 +10,52 @@ import {
 import { useAuth } from "../../../contexts/Auth";
 import { TextInput, Select } from "../../../components/FormComponents";
 import RecipeCard from "../../../components/RecipeCard";
+import PaginationButton from "../../../components/PaginationButton";
 
 export default function UserRecipes() {
   const recipes = useLoaderData();
-  const [search, setSearch] = React.useState("");
-  const [visibility, setVisibility] = React.useState("all");
-  const [dishType, setDishType] = React.useState("all");
   const { username } = useParams();
   const { user } = useAuth();
   const navigate = useNavigate();
+
+  const [filterState, setFilterState] = React.useState({
+    search: "",
+    visibility: "all",
+    currentPage: 1,
+    dishType: "all",
+  });
+
+  const { search, visibility, currentPage, dishType } = filterState;
 
   React.useEffect(() => {
     if (user && user.user_metadata.username !== username) {
       navigate(`/${user.user_metadata.username}/recipes`, { replace: true });
     }
   }, [user, username, navigate]);
+
+  const handleSearchChange = (e) => {
+    setFilterState({
+      ...filterState,
+      search: e.target.value,
+      currentPage: 1,
+    });
+  };
+
+  const handleVisibilityChange = (e) => {
+    setFilterState({
+      ...filterState,
+      visibility: e.target.value,
+      currentPage: 1,
+    });
+  };
+
+  const handleDishTypeChange = (e) => {
+    setFilterState({
+      ...filterState,
+      dishType: e.target.value,
+      currentPage: 1,
+    });
+  };
 
   let filteredRecipes = recipes;
 
@@ -42,10 +73,24 @@ export default function UserRecipes() {
     return recipe.dish_types.includes(dishType);
   });
 
+  const totalPages = Math.ceil(filteredRecipes.length / 4);
+
+  filteredRecipes = filteredRecipes.slice(
+    (currentPage - 1) * 4,
+    currentPage * 4
+  );
+
+  const handlePageChange = (page) => {
+    setFilterState({
+      ...filterState,
+      currentPage: page,
+    });
+  };
+
   return (
     <>
       {username !== user.user_metadata.username && (
-        <Navigate to={`/${user.user_metadata.usernamee}/recipes`} replace />
+        <Navigate to={`/${user.user_metadata.username}/recipes`} replace />
       )}
 
       <Container>
@@ -66,23 +111,17 @@ export default function UserRecipes() {
               placeholder="Search recipe by title!"
               className="md:max-w-xs"
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={handleSearchChange}
             />
           </div>
-          <Select
-            className="max-w-fit"
-            onChange={(e) => setDishType(e.target.value)}
-          >
+          <Select className="max-w-fit" onChange={handleDishTypeChange}>
             <option value="all">All types</option>
             <option value="Breakfast">Breakfast</option>
             <option value="Lunch">Lunch</option>
             <option value="Dinner">Dinner</option>
             <option value="Snack">Snack</option>
           </Select>
-          <Select
-            className="max-w-fit"
-            onChange={(e) => setVisibility(e.target.value)}
-          >
+          <Select className="max-w-fit" onChange={handleVisibilityChange}>
             <option value="all">All Visibility</option>
             <option value={true}>Public</option>
             <option value={false}>Private</option>
@@ -99,6 +138,13 @@ export default function UserRecipes() {
               />
             ))}
         </div>
+
+        <PaginationButton
+          className="w-full flex justify-center mt-12"
+          totalPages={totalPages}
+          currentPage={currentPage}
+          handlePageChange={handlePageChange}
+        />
       </Container>
     </>
   );
