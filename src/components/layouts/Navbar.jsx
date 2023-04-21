@@ -25,7 +25,7 @@ export default function Navbar() {
         <ul className="menu menu-horizontal px-1">
           <li tabIndex="0">
             <a>
-              Get Recipes
+              Menu
               <svg
                 className="fill-current"
                 xmlns="http://www.w3.org/2000/svg"
@@ -37,6 +37,9 @@ export default function Navbar() {
               </svg>
             </a>
             <ul className="p-2 bg-base-100 shadow ">
+              <li>
+                <Link to={"/"}>Home</Link>
+              </li>
               <li>
                 <Link to={"/recipes/random"}>Get Random Recipe</Link>
               </li>
