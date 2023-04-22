@@ -17,6 +17,7 @@ export default function Register() {
     handleSubmit,
     watch,
     formState: { errors, isSubmitting },
+    reset,
   } = useForm();
 
   const onSubmit = async (data) => {
@@ -60,6 +61,7 @@ export default function Register() {
       type: "success",
       message: "Check your email for the confirmation link",
     });
+    reset();
   };
 
   return (

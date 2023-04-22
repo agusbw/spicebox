@@ -135,6 +135,7 @@ export default function UserRecipes() {
                 key={recipe.id}
                 recipe={recipe}
                 username={user.user_metadata.username}
+                linkToDetail={`/${user.user_metadata.username}/recipes/${recipe.id}`}
               />
             ))}
         </div>

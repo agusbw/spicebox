@@ -15,11 +15,12 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 import UserRecipes from "./pages/user/recipes";
 import AddRecipe from "./pages/user/recipes/add";
+import UserDetailRecipe from "./pages/user/recipes/detail";
 import NotFound from "./pages/404";
 
 function App() {
   const { user } = useAuth();
-  const { getUserRecipes } = useRecipe();
+  const { getUserRecipes, getRecipe } = useRecipe();
 
   const router = createBrowserRouter([
     {
@@ -45,6 +46,20 @@ function App() {
         {
           path: "/:username/recipes/add",
           element: <PrivateRoute component={AddRecipe} />,
+        },
+        {
+          path: "/:username/recipes/:recipeId",
+          element: <PrivateRoute component={UserDetailRecipe} />,
+          loader: async ({ params }) => {
+            if (user) {
+              const recipe = await getRecipe(params.recipeId);
+              if (recipe.user_id !== user.id) {
+                return null;
+              }
+              return recipe;
+            }
+            return null;
+          },
         },
       ],
     },

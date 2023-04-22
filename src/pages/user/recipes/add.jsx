@@ -48,7 +48,8 @@ export default function AddUserRecipe() {
         icon: "success",
         confirmButtonText: "Ok",
       });
-
+      setIngredientsCount(1);
+      setStepsCount(1);
       reset();
       return;
     }
