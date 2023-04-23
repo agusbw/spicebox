@@ -9,6 +9,7 @@ import useRecipe from "./hooks/useRecipe";
 
 import RootLayout from "./components/layouts/RootLayout";
 import PrivateRoute from "./components/PrivateRoute";
+import PrivateRecipeRoute from "./components/PrivateRecipeRoute";
 
 import Home from "./pages/index";
 import Login from "./pages/login";
@@ -50,30 +51,18 @@ function App() {
         },
         {
           path: "/:username/recipes/:recipeId/update",
-          element: <PrivateRoute component={UpdateRecipe} />,
+          element: <PrivateRecipeRoute component={UpdateRecipe} />,
           loader: async ({ params }) => {
-            if (user) {
-              const recipe = await getRecipe(params.recipeId);
-              if (recipe.user_id !== user.id) {
-                return null;
-              }
-              return recipe;
-            }
-            return null;
+            const recipe = await getRecipe(params.recipeId);
+            return recipe;
           },
         },
         {
           path: "/:username/recipes/:recipeId",
-          element: <PrivateRoute component={UserDetailRecipe} />,
+          element: <PrivateRecipeRoute component={UserDetailRecipe} />,
           loader: async ({ params }) => {
-            if (user) {
-              const recipe = await getRecipe(params.recipeId);
-              if (recipe.user_id !== user.id) {
-                return null;
-              }
-              return recipe;
-            }
-            return null;
+            const recipe = await getRecipe(params.recipeId);
+            return recipe;
           },
         },
       ],
