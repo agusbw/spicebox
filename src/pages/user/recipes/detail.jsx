@@ -15,7 +15,7 @@ export default function UserDetailRecipe() {
   const { deleteRecipe } = useRecipe();
 
   const handleDelete = async () => {
-    const confirm = await Swal.fire({
+    const { isConfirmed } = await Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
       icon: "warning",
@@ -23,15 +23,14 @@ export default function UserDetailRecipe() {
       showCancelButton: true,
     });
 
-    if (confirm.isConfirmed) {
-      const error = await deleteRecipe(recipe.id, recipe.image);
-      if (error) {
-        Swal.fire("Error!", "Something went wrong, try again!", "error");
-        return;
-      }
-      Swal.fire("Deleted!", "Your file has been deleted.", "success");
-      navigate(`/${user.user_metadata.username}/recipes`, { replace: true });
+    if (!isConfirmed) return;
+    const error = await deleteRecipe(recipe.id, recipe.image);
+    if (error) {
+      Swal.fire("Error!", "Something went wrong, try again!", "error");
+      return;
     }
+    Swal.fire("Deleted!", "Your file has been deleted.", "success");
+    navigate(`/${user.user_metadata.username}/recipes`, { replace: true });
   };
 
   return (

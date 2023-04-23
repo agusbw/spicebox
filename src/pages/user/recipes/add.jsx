@@ -31,6 +31,16 @@ export default function AddUserRecipe() {
   }, [user, username, navigate]);
 
   const onSubmit = async (data) => {
+    const { isConfirmed } = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      confirmButtonText: "Yes, add it!",
+      showCancelButton: true,
+      cancelButtonText: "No, cancel!",
+    });
+
+    if (!isConfirmed) return;
     const recipeImage = data.image[0];
     const image = await uploadRecipeImage(user.id, recipeImage);
     const diets = splitWordsToArray(data.diets);

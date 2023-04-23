@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { RECIPE_IMAGE_URL } from "../../../constants";
-import { useNavigate, useLoaderData } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import InputErrorMessage from "../../../components/InputErrorMessage";
@@ -17,7 +17,6 @@ export default function UpdateRecipe() {
     formState: { errors, isSubmitting },
   } = useForm();
   const recipe = useLoaderData();
-  const navigate = useNavigate();
   const [ingredientsCount, setIngredientsCount] = useState(
     recipe?.ingredients?.length
   );
@@ -29,6 +28,16 @@ export default function UpdateRecipe() {
   const { updateRecipe, uploadRecipeImage, deleteRecipeImage } = useRecipe();
 
   const onSubmit = async (data) => {
+    const { isConfirmed } = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      confirmButtonText: "Yes, update it!",
+      showCancelButton: true,
+      cancelButtonText: "No, cancel!",
+    });
+
+    if (!isConfirmed) return;
     let image;
     if (data.image.length > 0) {
       console.log("ok");
@@ -52,9 +61,6 @@ export default function UpdateRecipe() {
         text: "Your recipe has been added successfully",
         icon: "success",
         confirmButtonText: "Ok",
-      });
-      navigate(`/${user.user_metadata.username}/recipes/${recipe.id}`, {
-        replace: true,
       });
       return;
     }
