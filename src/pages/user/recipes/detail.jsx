@@ -9,9 +9,11 @@ import {
 import { useAuth } from "../../../contexts/Auth";
 import React from "react";
 import DetailRecipeContainer from "../../../components/layouts/DetailRecipeContainer";
+import profile from "../../../assets/profile.png";
 import { RECIPE_IMAGE_URL } from "../../../constants";
 import useRecipe from "../../../hooks/useRecipe";
 import Swal from "sweetalert2";
+import { getFullName } from "../../../utils/functions";
 
 export default function UserDetailRecipe() {
   const recipe = useLoaderData();
@@ -55,10 +57,10 @@ export default function UserDetailRecipe() {
       {recipe === null ? (
         <Navigate to={`/${user.user_metadata.username}/recipes`} replace />
       ) : (
-        <Container>
+        <Container className="min-h-screen mx-auto">
           <div className="md:max-w-5xl mx-auto">
             <div className="lg:flex gap-4">
-              <div className="flex flex-col gap-3 lg:w-9/12">
+              <div className="flex flex-col gap-3 lg:w-8/12">
                 <div className="rounded-md shadow-md w-full bg-base-100 border">
                   <img
                     src={`${RECIPE_IMAGE_URL}/${recipe.image}`}
@@ -67,16 +69,24 @@ export default function UserDetailRecipe() {
                   />
                 </div>
                 <DetailRecipeContainer>
-                  <h1 className="text-3xl font-bold">{recipe.title}</h1>
+                  <h1 className="text-3xl font-vidaloka">{recipe.title}</h1>
                   <p>
                     {recipe.description ? recipe.description : "No description"}
                   </p>
                 </DetailRecipeContainer>
-                <DetailRecipeContainer>
-                  <h2 className="text-xl font-bold">Recipe Details</h2>
+                <DetailRecipeContainer className={"bg-[#ECF6F6]"}>
+                  <h2 className="text-2xl font-vidaloka">Recipe Details</h2>
                   <p>
                     {recipe.serving_time
                       ? `Cooking time: ${recipe.serving_time} minutes`
+                      : ""}
+                  </p>
+                  <p>
+                    {recipe.portion ? `Portion: ${recipe.portion} person` : ""}
+                  </p>
+                  <p>
+                    {recipe.difficulty
+                      ? `Difficulty: ${recipe.difficulty}`
                       : ""}
                   </p>
                   <p>
@@ -90,32 +100,49 @@ export default function UserDetailRecipe() {
                   <p>Halal: {recipe.is_halal ? " Yes" : " No"}</p>
                 </DetailRecipeContainer>
                 <DetailRecipeContainer className="lg:hidden">
+                  <div className="flex flex-col justify-center items-center mb-4">
+                    <div className="">
+                      <img
+                        src={`${profile}`}
+                        alt="Food Image"
+                        className="object-cover btn-circle w-24 h-24"
+                      />
+                    </div>
+                    <div className="text-center">
+                      <p className="font-vidaloka text-lg">
+                        {user &&
+                          getFullName(
+                            user.user_metadata.firstname,
+                            user.user_metadata.lastname
+                          )}
+                      </p>
+                      <Link>@{user.user_metadata.username}</Link>
+                    </div>
+                  </div>
                   <div className="flex w-full gap-4">
-                    <Link className="btn btn-sm btn-outline btn-success  flex-1">
-                      Edit
-                    </Link>
+                    <Link className="btn btn-sm btn-primary flex-1">Edit</Link>
                     <button
-                      className="btn btn-sm btn-outline btn-error flex-1"
+                      className="btn btn-sm btn-secondary flex-1"
                       onClick={() => handleDelete(recipe.id)}
                     >
                       Delete
                     </button>
                   </div>
                 </DetailRecipeContainer>
-                <DetailRecipeContainer>
-                  <h2 className="text-xl font-bold mb-4">Ingredients</h2>
+                <DetailRecipeContainer className={"bg-orange-100"}>
+                  <h2 className="text-2xl font-vidaloka mb-4">Ingredients</h2>
                   {recipe.ingredients.map((ingredient, index) => (
-                    <div className="" key={index}>
+                    <div className="font-light text-lg" key={index}>
                       <p>{ingredient}</p>
                       <div className="divider m-0"></div>
                     </div>
                   ))}
                 </DetailRecipeContainer>
-                <DetailRecipeContainer>
-                  <h2 className="text-xl font-bold mb-4">Cooking Steps</h2>
+                <DetailRecipeContainer className={"bg-[#ECF6F6] "}>
+                  <h2 className="text-2xl font-vidaloka mb-4">Cooking Steps</h2>
                   {recipe.instructions.map((instruction, index) => (
-                    <div className="" key={index}>
-                      <p className="font-semibold">Step {index + 1}</p>
+                    <div className="font-light text-lg" key={index}>
+                      <p>Step {index + 1}</p>
                       <p>{instruction}</p>
                       <div className="divider m-0"></div>
                     </div>
@@ -123,16 +150,34 @@ export default function UserDetailRecipe() {
                 </DetailRecipeContainer>
               </div>
               <DetailRecipeContainer
-                className={"hidden lg:block sticky  top-24 w-3/12 h-fit"}
+                className={"hidden lg:block sticky top-24 w-4/12 h-fit"}
               >
-                <h2 className="text-xl font-bold mb-4">Actions</h2>
-                <div className="flex flex-col w-full gap-3 justify-center items-center">
+                <div className="flex flex-col justify-center items-center">
+                  <div className="">
+                    <img
+                      src={`${profile}`}
+                      alt="Food Image"
+                      className="object-cover btn-circle w-24 h-24"
+                    />
+                  </div>
+                  <div className="text-center">
+                    <p className="font-vidaloka text-lg">
+                      {user &&
+                        getFullName(
+                          user.user_metadata.firstname,
+                          user.user_metadata.lastname
+                        )}
+                    </p>
+                    <Link>@{user.user_metadata.username}</Link>
+                  </div>
+                </div>
+                <div className="flex flex-col w-full gap-3 mt-3 justify-center items-center">
                   <div className="flex w-full gap-4">
-                    <Link className="btn btn-sm btn-success flex-1" to={"/"}>
+                    <Link className="btn btn-sm btn-primary flex-1" to={"/"}>
                       Edit
                     </Link>
                     <button
-                      className="btn btn-sm btn-error flex-1"
+                      className="btn btn-sm btn-secondary flex-1"
                       onClick={() => handleDelete(recipe.id)}
                     >
                       Delete

@@ -39,7 +39,7 @@ export default function RecipeCard({ recipe, linkToDetail }) {
       </div>
       <div className="flex justify-between items-center mt-5 absolute bottom-0 right-0 left-0 p-5">
         {recipe.is_halal ? (
-          <span className="badge badge-success badge-lg">Halal</span>
+          <span className="px-4 bg-success">Halal</span>
         ) : (
           <span className="badge badge-warning">Non-Halal</span>
         )}
