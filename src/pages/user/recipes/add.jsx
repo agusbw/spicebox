@@ -14,6 +14,7 @@ export default function AddUserRecipe() {
   const {
     register,
     handleSubmit,
+    unregister,
     formState: { errors, isSubmitting },
     reset,
   } = useForm();
@@ -416,9 +417,10 @@ export default function AddUserRecipe() {
                             <button
                               type="button"
                               className="btn btn-error btn-xs mt-2"
-                              onClick={() =>
-                                setIngredientsCount((prev) => prev - 1)
-                              }
+                              onClick={() => {
+                                unregister(`ingredients[${index}]`);
+                                setIngredientsCount((prev) => prev - 1);
+                              }}
                             >
                               Remove
                             </button>
@@ -460,7 +462,9 @@ export default function AddUserRecipe() {
                           <button
                             type="button"
                             className="btn btn-success btn-xs mt-2"
-                            onClick={() => setStepsCount((prev) => prev + 1)}
+                            onClick={() => {
+                              setStepsCount((prev) => prev + 1);
+                            }}
                           >
                             Add
                           </button>
@@ -471,7 +475,10 @@ export default function AddUserRecipe() {
                             <button
                               type="button"
                               className="btn btn-error btn-xs mt-2"
-                              onClick={() => setStepsCount((prev) => prev - 1)}
+                              onClick={() => {
+                                unregister(`instructions[${index}]`);
+                                setStepsCount((prev) => prev - 1);
+                              }}
                             >
                               Remove
                             </button>

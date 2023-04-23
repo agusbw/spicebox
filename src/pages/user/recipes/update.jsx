@@ -14,6 +14,7 @@ export default function UpdateRecipe() {
   const {
     register,
     handleSubmit,
+    unregister,
     formState: { errors, isSubmitting },
   } = useForm();
   const recipe = useLoaderData();
@@ -442,9 +443,10 @@ export default function UpdateRecipe() {
                             <button
                               type="button"
                               className="btn btn-error btn-xs mt-2"
-                              onClick={() =>
-                                setIngredientsCount((prev) => prev - 1)
-                              }
+                              onClick={() => {
+                                unregister(`ingredients[${index}]`);
+                                setIngredientsCount((prev) => prev - 1);
+                              }}
                             >
                               Remove
                             </button>
@@ -498,7 +500,10 @@ export default function UpdateRecipe() {
                             <button
                               type="button"
                               className="btn btn-error btn-xs mt-2"
-                              onClick={() => setStepsCount((prev) => prev - 1)}
+                              onClick={() => {
+                                unregister(`instructions[${index}]`);
+                                setStepsCount((prev) => prev - 1);
+                              }}
                             >
                               Remove
                             </button>
