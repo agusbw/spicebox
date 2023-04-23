@@ -6,7 +6,7 @@ import InputErrorMessage from "../../../components/InputErrorMessage";
 import useRecipe from "../../../hooks/useRecipe";
 import { splitWordsToArray } from "../../../utils/functions";
 import { useAuth } from "../../../contexts/Auth";
-import { TextInput } from "../../../components/FormComponents";
+import { TextInput, Select } from "../../../components/FormComponents";
 import Container from "../../../components/layouts/Container";
 import React from "react";
 
@@ -40,6 +40,7 @@ export default function AddUserRecipe() {
       diets,
       user_id: user.id,
     };
+
     const status = await addUserRecipe(recipe);
     if (status === 201) {
       Swal.fire({
@@ -162,13 +163,40 @@ export default function AddUserRecipe() {
                   <InputErrorMessage message={errors.image.message} />
                 )}
               </div>
+
+              <div className="form-control w-fit">
+                <TextInput
+                  label="Portion*"
+                  name="portion"
+                  type="number"
+                  placeholder="1"
+                  className="input-sm w-1/2 p-0 ps-3"
+                  register={register("portion", {
+                    required: {
+                      value: true,
+                      message: "Please enter the portion",
+                    },
+                    pattern: {
+                      value: /^[0-9]*$/,
+                      message: "Please enter a valid number",
+                    },
+                  })}
+                />
+                {
+                  // If there is an error, show the error message
+                  errors.portion && (
+                    <InputErrorMessage message={errors.portion.message} />
+                  )
+                }
+              </div>
+
               <div className="form-control w-fit">
                 <TextInput
                   label="Serving time (minutes)*"
                   name="serving_time"
                   type="number"
                   placeholder="30"
-                  className="input-sm w-1/3 p-0 ps-3"
+                  className="input-sm w-1/2 p-0 ps-3"
                   register={register("serving_time", {
                     required: {
                       value: true,
@@ -184,6 +212,32 @@ export default function AddUserRecipe() {
                   // If there is an error, show the error message
                   errors.serving_time && (
                     <InputErrorMessage message={errors.serving_time.message} />
+                  )
+                }
+              </div>
+
+              <div className="form-control w-1/2 my-2">
+                <label className="label text-base label-text font-semibold pb-0">
+                  <span className="label-text">Recipe difficulty*</span>
+                </label>
+                <Select
+                  className={`font-normal select-sm`}
+                  register={register("difficulty", {
+                    required: {
+                      value: true,
+                      message: "Please select a difficulty",
+                    },
+                  })}
+                >
+                  <option value="">Difficulty</option>
+                  <option value="Easy">Easy</option>
+                  <option value="Medioum">Medium</option>
+                  <option value="Hard">Hard</option>
+                </Select>
+                {
+                  // If there is an error, show the error message
+                  errors.difficulty && (
+                    <InputErrorMessage message={errors.difficulty.message} />
                   )
                 }
               </div>
@@ -250,7 +304,7 @@ export default function AddUserRecipe() {
                     </div>
                   </div>
                 </div>
-                {errors.dish_type && (
+                {errors.dish_types && (
                   <InputErrorMessage message={"Please select a dish type"} />
                 )}
               </div>
