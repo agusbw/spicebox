@@ -74,8 +74,22 @@ export default function UserDetailRecipe() {
                     {recipe.description ? recipe.description : "No description"}
                   </p>
                 </DetailRecipeContainer>
-                <DetailRecipeContainer className={"bg-[#ECF6F6]"}>
+                <DetailRecipeContainer>
                   <h2 className="text-2xl font-vidaloka">Recipe Details</h2>
+                  <p>
+                    {recipe.dish_types.length > 0 ? (
+                      <span>
+                        Dish Types:{" "}
+                        {recipe.dish_types.map((dish, index) => (
+                          <span key={index} className="badge badge-accent me-1">
+                            {dish}{" "}
+                          </span>
+                        ))}
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                  </p>
                   <p>
                     {recipe.serving_time
                       ? `Cooking time: ${recipe.serving_time} minutes`
@@ -138,7 +152,7 @@ export default function UserDetailRecipe() {
                     </div>
                   ))}
                 </DetailRecipeContainer>
-                <DetailRecipeContainer className={"bg-[#ECF6F6] "}>
+                <DetailRecipeContainer className={"bg-teal-50"}>
                   <h2 className="text-2xl font-vidaloka mb-4">Cooking Steps</h2>
                   {recipe.instructions.map((instruction, index) => (
                     <div className="font-light text-lg" key={index}>
@@ -173,7 +187,10 @@ export default function UserDetailRecipe() {
                 </div>
                 <div className="flex flex-col w-full gap-3 mt-3 justify-center items-center">
                   <div className="flex w-full gap-4">
-                    <Link className="btn btn-sm btn-primary flex-1" to={"/"}>
+                    <Link
+                      className="btn btn-sm btn-primary flex-1"
+                      to={`/${user.user_metadata.username}/recipes/${recipe.id}/update`}
+                    >
                       Edit
                     </Link>
                     <button

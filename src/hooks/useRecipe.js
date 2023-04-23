@@ -109,23 +109,26 @@ export default function useRecipe() {
     }
   };
 
-  // const deleteRecipeImage = async (path) => {
-  //   try {
-  //     const { status } = await supabase.storage.from("recipes").remove([path]);
-  //     return status;
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const deleteRecipeImage = async (path) => {
+    try {
+      const { status } = await supabase.storage.from("recipes").remove([path]);
+      return status;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  // const deleteRecipe = async (id) => {
-  //   try {
-  //     const { status } = await supabase.from("recipes").delete().eq("id", id);
-  //     return status;
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const updateRecipe = async (id, recipe) => {
+    try {
+      const { status } = await supabase
+        .from("recipes")
+        .update(recipe)
+        .eq("id", id);
+      return status;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const deleteRecipe = async (id, path) => {
     try {
@@ -153,5 +156,7 @@ export default function useRecipe() {
     getUserAndRecipe,
     deleteRecipe,
     getUserRecipesByType,
+    deleteRecipeImage,
+    updateRecipe,
   };
 }

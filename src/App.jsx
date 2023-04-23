@@ -15,6 +15,7 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 import UserRecipes from "./pages/user/recipes";
 import AddRecipe from "./pages/user/recipes/add";
+import UpdateRecipe from "./pages/user/recipes/update";
 import UserDetailRecipe from "./pages/user/recipes/detail";
 import NotFound from "./pages/404";
 
@@ -46,6 +47,20 @@ function App() {
         {
           path: "/:username/recipes/add",
           element: <PrivateRoute component={AddRecipe} />,
+        },
+        {
+          path: "/:username/recipes/:recipeId/update",
+          element: <PrivateRoute component={UpdateRecipe} />,
+          loader: async ({ params }) => {
+            if (user) {
+              const recipe = await getRecipe(params.recipeId);
+              if (recipe.user_id !== user.id) {
+                return null;
+              }
+              return recipe;
+            }
+            return null;
+          },
         },
         {
           path: "/:username/recipes/:recipeId",
