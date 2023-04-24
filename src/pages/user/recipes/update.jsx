@@ -96,7 +96,7 @@ export default function UpdateRecipe() {
           className="mt-5 border border-gray-200 shadow-md p-5 w-full rounded-md"
         >
           <div className="flex flex-col md:flex-row lg:flex-row w-full gap-5 mb-3 md:gap-10">
-            <div className="md:max-h-80 md:overflow-auto md:pe-5 md:px-1 md:w-1/3">
+            <div className="md:max-h-96 md:overflow-auto md:pe-5 md:px-1 md:w-1/3">
               <h2 className="text-2xl font-bold">Recipe Details</h2>
               <div className="form-control w-full">
                 <TextInput
@@ -404,7 +404,7 @@ export default function UpdateRecipe() {
               </div>
             </div>
 
-            <div className="md:max-h-80 md:overflow-auto md:pe-5 md:px-1 md:w-1/3">
+            <div className="md:max-h-96  md:overflow-auto md:pe-5 md:px-1 md:w-1/3">
               <h2 className="text-2xl font-bold">Ingredients</h2>
               {[...Array(ingredientsCount)].map((_, index) => {
                 return (
@@ -458,7 +458,7 @@ export default function UpdateRecipe() {
               })}
             </div>
 
-            <div className="md:max-h-80 md:overflow-auto md:pe-5 md:px-1 md:w-1/3">
+            <div className="md:max-h-96 md:overflow-auto md:pe-5 md:px-1 md:w-1/3">
               <h2 className="text-2xl font-bold">Cooking Steps</h2>
               {
                 // Create a list of ingredients
