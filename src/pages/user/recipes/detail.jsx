@@ -109,7 +109,12 @@ export default function UserDetailRecipe() {
                   </div>
                 </div>
                 <div className="flex w-full gap-4">
-                  <Link className="btn btn-sm btn-primary flex-1">Edit</Link>
+                  <Link
+                    className="btn btn-sm btn-primary flex-1"
+                    to={`/${user.user_metadata.username}/recipes/${recipe.id}/update`}
+                  >
+                    Edit
+                  </Link>
                   <button
                     className="btn btn-sm btn-secondary flex-1"
                     onClick={() => handleDelete(recipe.id)}
