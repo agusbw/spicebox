@@ -25,7 +25,7 @@ export default function useRecipe() {
     }
   };
 
-  const getAllPublicRecipes = async () => {
+  const getPublicRecipes = async () => {
     try {
       const { data } = await supabase
         .from("recipes")
@@ -148,7 +148,7 @@ export default function useRecipe() {
   return {
     getUserRecipes,
     getAllRecipes,
-    getAllPublicRecipes,
+    getPublicRecipes,
     addUserRecipe,
     uploadRecipeImage,
     getRecipeImage,

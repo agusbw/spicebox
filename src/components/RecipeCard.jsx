@@ -41,7 +41,7 @@ export default function RecipeCard({ recipe, linkToDetail }) {
         {recipe.is_halal ? (
           <span className="px-4 bg-success">Halal</span>
         ) : (
-          <span className="badge badge-warning">Non-Halal</span>
+          <span className="px-4 bg-warning">Non-Halal</span>
         )}
         <Link className="btn btn-primary btn-sm" to={linkToDetail}>
           detail
