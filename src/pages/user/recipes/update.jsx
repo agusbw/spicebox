@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
-import { useNavigate, useParams, Navigate } from "react-router-dom";
+import { RECIPE_IMAGE_URL } from "../../../constants";
+import { useLoaderData } from "react-router-dom";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import InputErrorMessage from "../../../components/InputErrorMessage";
@@ -8,61 +9,60 @@ import { splitWordsToArray } from "../../../utils/functions";
 import { useAuth } from "../../../contexts/Auth";
 import { TextInput, Select } from "../../../components/FormComponents";
 import Container from "../../../components/layouts/Container";
-import React from "react";
 
-export default function AddUserRecipe() {
+export default function UpdateRecipe() {
   const {
     register,
     handleSubmit,
     unregister,
     formState: { errors, isSubmitting },
-    reset,
   } = useForm();
-  const navigate = useNavigate();
-  const { username } = useParams();
-  const [ingredientsCount, setIngredientsCount] = useState(1);
+  const recipe = useLoaderData();
+  const [ingredientsCount, setIngredientsCount] = useState(
+    recipe?.ingredients?.length
+  );
+  const [imagePreview, setImagePreview] = useState(
+    `${RECIPE_IMAGE_URL}/${recipe?.image}`
+  );
   const { user } = useAuth();
-  const [stepsCount, setStepsCount] = useState(1);
-  const { addUserRecipe, uploadRecipeImage } = useRecipe();
-
-  React.useEffect(() => {
-    if (user && user.user_metadata.username !== username) {
-      navigate(`/${user.user_metadata.username}/recipes`, { replace: true });
-    }
-  }, [user, username, navigate]);
+  const [stepsCount, setStepsCount] = useState(recipe?.instructions?.length);
+  const { updateRecipe, uploadRecipeImage, deleteRecipeImage } = useRecipe();
 
   const onSubmit = async (data) => {
     const { isConfirmed } = await Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
       icon: "warning",
-      confirmButtonText: "Yes, add it!",
+      confirmButtonText: "Yes, update it!",
       showCancelButton: true,
       cancelButtonText: "No, cancel!",
     });
 
     if (!isConfirmed) return;
-    const recipeImage = data.image[0];
-    const image = await uploadRecipeImage(user.id, recipeImage);
+    let image;
+    if (data.image.length > 0) {
+      console.log("ok");
+      await deleteRecipeImage(recipe.image);
+      const recipeImage = data.image[0];
+      image = await uploadRecipeImage(user.id, recipeImage);
+    }
     const diets = splitWordsToArray(data.diets);
-    const recipe = {
+    const updatedRecipe = {
       ...data,
-      image,
+      image: image || recipe.image,
       diets,
       user_id: user.id,
     };
 
-    const status = await addUserRecipe(recipe);
-    if (status === 201) {
+    const status = await updateRecipe(recipe.id, updatedRecipe);
+
+    if (status === 204) {
       Swal.fire({
         title: "Success!",
         text: "Your recipe has been added successfully",
         icon: "success",
         confirmButtonText: "Ok",
       });
-      setIngredientsCount(1);
-      setStepsCount(1);
-      reset();
       return;
     }
     Swal.fire({
@@ -73,15 +73,24 @@ export default function AddUserRecipe() {
     });
   };
 
+  function handleImageChange(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function () {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setImagePreview(`${RECIPE_IMAGE_URL}/${recipe.image}`);
+    }
+  }
+
   return (
     <>
-      {" "}
-      {username !== user.user_metadata.username && (
-        <Navigate to={`/${user.user_metadata.usernamee}/recipes`} replace />
-      )}
       <Container>
-        <h1 className="text-4xl font-bold mb-3">Add Recipe📖</h1>
-        <p className="text-2xl">Add your own recipe here ❤ !</p>
+        <h1 className="text-4xl font-bold mb-3">Update Recipe📖</h1>
+        <p className="text-2xl">Update your own recipe here ❤ !</p>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="mt-5 border border-gray-200 shadow-md p-5 w-full rounded-md"
@@ -94,6 +103,7 @@ export default function AddUserRecipe() {
                   label="Recipe Title*"
                   placeholder="Hawaiian Pizza"
                   name="title"
+                  defaultValue={recipe.title}
                   type="text"
                   className="input-sm"
                   register={register("title", {
@@ -114,6 +124,7 @@ export default function AddUserRecipe() {
                 <textarea
                   type="text"
                   placeholder="Max 200 characters"
+                  defaultValue={recipe.description}
                   className="input w-full text-sm p-2 bg-base-200 outline-none outline-offset-0 focus:outline-offset-0 hover:outline hover:outline-4 ease-in-out transition-all duration-100 hover:outline-red-200 hover:bg-white hover:border hover:border-gray-300 focus:border-red-300 focus:bg-white focus:outline-red-200 focus:outline-4 active:outline-0"
                   rows={4}
                   name="description"
@@ -136,17 +147,19 @@ export default function AddUserRecipe() {
                 <label className="label text-base label-text font-semibold">
                   <span className="label-text">Choose food image*</span>
                 </label>
+                <div className="mb-2">
+                  <img src={imagePreview} alt="" />
+                </div>
                 <input
+                  className="file-input file-input-bordered file-input-secondary file-input-sm w-full max-w-xs bg-base-200 outline-none outline-offset-0 focus:outline-offset-0 hover:outline hover:outline-4 ease-in-out transition-all duration-100 hover:outline-red-200 hover:bg-white hover:border hover:border-gray-300 focus:border-red-300 focus:bg-white focus:outline-red-200 focus:outline-4 active:outline-0"
                   type="file"
                   name="image"
                   accept="image/*"
                   {...register("image", {
-                    required: {
-                      value: true,
-                      message: "Please upload an image for your recipe",
-                    },
+                    onChange: handleImageChange,
                     validate: {
                       lessThan10MB: (fileList) => {
+                        if (fileList.length <= 0) return true;
                         const file = fileList[0];
                         if (file.size > 3000000) {
                           return "Image size should be less than 3MB";
@@ -154,6 +167,7 @@ export default function AddUserRecipe() {
                         return true;
                       },
                       acceptedFormats: (fileList) => {
+                        if (fileList.length <= 0) return true;
                         const file = fileList[0];
                         const acceptedFormats = [
                           "image/jpeg",
@@ -168,7 +182,6 @@ export default function AddUserRecipe() {
                       },
                     },
                   })}
-                  className="file-input file-input-bordered file-input-secondary file-input-sm w-full max-w-xs bg-base-200 outline-none outline-offset-0 focus:outline-offset-0 hover:outline hover:outline-4 ease-in-out transition-all duration-100 hover:outline-red-200 hover:bg-white hover:border hover:border-gray-300 focus:border-red-300 focus:bg-white focus:outline-red-200 focus:outline-4 active:outline-0"
                 />
                 {errors.image && (
                   <InputErrorMessage message={errors.image.message} />
@@ -179,6 +192,7 @@ export default function AddUserRecipe() {
                 <TextInput
                   label="Portion*"
                   name="portion"
+                  defaultValue={recipe.portion}
                   type="number"
                   placeholder="1"
                   className="input-sm w-1/2 p-0 ps-3"
@@ -207,6 +221,7 @@ export default function AddUserRecipe() {
                   name="serving_time"
                   type="number"
                   placeholder="30"
+                  defaultValue={recipe.serving_time}
                   className="input-sm w-1/2 p-0 ps-3"
                   register={register("serving_time", {
                     required: {
@@ -239,11 +254,12 @@ export default function AddUserRecipe() {
                       message: "Please select a difficulty",
                     },
                   })}
+                  defaultValue={recipe.difficulty}
                 >
                   <option value="">Difficulty</option>
-                  <option value="Easy">Easy</option>
-                  <option value="Medioum">Medium</option>
-                  <option value="Hard">Hard</option>
+                  <option defaultValue="Easy">Easy</option>
+                  <option defaultValue="Medium">Medium</option>
+                  <option defaultValue="Hard">Hard</option>
                 </Select>
                 {
                   // If there is an error, show the error message
@@ -265,6 +281,9 @@ export default function AddUserRecipe() {
                         <input
                           type="checkbox"
                           defaultValue="Breakfast"
+                          defaultChecked={recipe.dish_types.includes(
+                            "Breakfast"
+                          )}
                           className="checkbox checkbox-secondary"
                           {...register("dish_types", {
                             required: true,
@@ -278,6 +297,7 @@ export default function AddUserRecipe() {
                         <input
                           type="checkbox"
                           defaultValue="Lunch"
+                          defaultChecked={recipe.dish_types.includes("Lunch")}
                           className="checkbox checkbox-secondary"
                           {...register("dish_types", {
                             required: true,
@@ -293,6 +313,7 @@ export default function AddUserRecipe() {
                         <input
                           type="checkbox"
                           defaultValue="Dinner"
+                          defaultChecked={recipe.dish_types.includes("Dinner")}
                           className="checkbox checkbox-secondary"
                           {...register("dish_types", {
                             required: true,
@@ -306,6 +327,7 @@ export default function AddUserRecipe() {
                         <input
                           type="checkbox"
                           defaultValue="Snack"
+                          defaultChecked={recipe.dish_types.includes("Snack")}
                           className="checkbox checkbox-secondary"
                           {...register("dish_types", {
                             required: true,
@@ -331,6 +353,7 @@ export default function AddUserRecipe() {
                     name="is_halal"
                     className="radio radio-primary h-5 w-5"
                     defaultValue={true}
+                    defaultChecked={recipe.is_halal ? true : false}
                     {...register("is_halal", {
                       required: {
                         value: true,
@@ -348,6 +371,7 @@ export default function AddUserRecipe() {
                     id="radio2"
                     name="is_halal"
                     className="radio radio-primary h-5 w-5"
+                    defaultChecked={recipe.is_halal ? false : true}
                     defaultValue={false}
                     {...register("is_halal", {
                       required: {
@@ -372,6 +396,7 @@ export default function AddUserRecipe() {
                   label="Diet types"
                   placeholder="Vegan, Vegetarian, Pescatarian"
                   type="text"
+                  defaultValue={recipe.diets}
                   name="diets"
                   className="input-sm"
                   register={register("diets")}
@@ -379,7 +404,7 @@ export default function AddUserRecipe() {
               </div>
             </div>
 
-            <div className="md:max-h-96 md:overflow-auto md:pe-5 md:px-1 md:w-1/3">
+            <div className="md:max-h-96  md:overflow-auto md:pe-5 md:px-1 md:w-1/3">
               <h2 className="text-2xl font-bold">Ingredients</h2>
               {[...Array(ingredientsCount)].map((_, index) => {
                 return (
@@ -388,6 +413,7 @@ export default function AddUserRecipe() {
                       label={`Ingredient ${index + 1}*`}
                       placeholder="1 cup of flour"
                       name={`ingredients[${index}]`}
+                      defaultValue={recipe.ingredients[index]}
                       register={register(`ingredients[${index}]`, {
                         required: true,
                       })}
@@ -447,6 +473,7 @@ export default function AddUserRecipe() {
                         placeholder="Mix the flour and water"
                         className="input w-full text-sm p-2 bg-base-200 outline-none outline-offset-0 focus:outline-offset-0 hover:outline hover:outline-4 ease-in-out transition-all duration-100 hover:outline-red-200 hover:bg-white hover:border hover:border-gray-300 focus:border-red-300 focus:bg-white focus:outline-red-200 focus:outline-4 active:outline-0"
                         rows={4}
+                        defaultValue={recipe.instructions[index]}
                         name={`instructions[${index}]`}
                         {...register(`instructions[${index}]`, {
                           required: true,
@@ -462,9 +489,7 @@ export default function AddUserRecipe() {
                           <button
                             type="button"
                             className="btn btn-success btn-xs mt-2"
-                            onClick={() => {
-                              setStepsCount((prev) => prev + 1);
-                            }}
+                            onClick={() => setStepsCount((prev) => prev + 1)}
                           >
                             Add
                           </button>
@@ -499,6 +524,7 @@ export default function AddUserRecipe() {
                 </span>
                 <input
                   type="checkbox"
+                  defaultChecked={recipe.is_public}
                   className="checkbox checkbox-secondary"
                   {...register("is_public")}
                 />
@@ -509,7 +535,7 @@ export default function AddUserRecipe() {
               className="btn btn-primary w-32 btn-sm"
               disabled={isSubmitting}
             >
-              Add Recipe
+              Edit Recipe
             </button>
           </div>
         </form>

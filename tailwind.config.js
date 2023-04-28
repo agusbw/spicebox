@@ -4,7 +4,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
+        sans: ["Roboto", "sans-serif"],
         pacifico: ["Pacifico", "cursive"],
+        vidaloka: ["Vidaloka", "serif"],
       },
     },
   },

@@ -25,7 +25,7 @@ export default function useRecipe() {
     }
   };
 
-  const getAllPublicRecipes = async () => {
+  const getPublicRecipes = async () => {
     try {
       const { data } = await supabase
         .from("recipes")
@@ -45,7 +45,6 @@ export default function useRecipe() {
         .select("*")
         .eq("user_id", user_id)
         .contains("dish_types", [typeArr]);
-
       return data;
     } catch (error) {
       console.log(error);
@@ -85,7 +84,7 @@ export default function useRecipe() {
   const getRecipe = async (id) => {
     try {
       const { data } = await supabase.from("recipes").select("*").eq("id", id);
-      return data;
+      return data[0];
     } catch (error) {
       console.log(error);
     }
@@ -119,10 +118,28 @@ export default function useRecipe() {
     }
   };
 
-  const deleteRecipe = async (id) => {
+  const updateRecipe = async (id, recipe) => {
     try {
-      const { status } = await supabase.from("recipes").delete().eq("id", id);
+      const { status } = await supabase
+        .from("recipes")
+        .update(recipe)
+        .eq("id", id);
       return status;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteRecipe = async (id, path) => {
+    try {
+      const { error: error } = await supabase
+        .from("recipes")
+        .delete()
+        .eq("id", id);
+      const { error: errorImage } = await supabase.storage
+        .from("recipes")
+        .remove([path]);
+      return error || errorImage;
     } catch (error) {
       console.log(error);
     }
@@ -131,14 +148,15 @@ export default function useRecipe() {
   return {
     getUserRecipes,
     getAllRecipes,
-    getAllPublicRecipes,
+    getPublicRecipes,
     addUserRecipe,
     uploadRecipeImage,
     getRecipeImage,
     getRecipe,
     getUserAndRecipe,
     deleteRecipe,
-    deleteRecipeImage,
     getUserRecipesByType,
+    deleteRecipeImage,
+    updateRecipe,
   };
 }

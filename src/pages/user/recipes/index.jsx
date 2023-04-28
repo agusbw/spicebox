@@ -12,6 +12,8 @@ import { TextInput, Select } from "../../../components/FormComponents";
 import RecipeCard from "../../../components/RecipeCard";
 import PaginationButton from "../../../components/PaginationButton";
 
+const RECIPE_PER_PAGE = 4;
+
 export default function UserRecipes() {
   const recipes = useLoaderData();
   const { username } = useParams();
@@ -73,7 +75,7 @@ export default function UserRecipes() {
     return recipe.dish_types.includes(dishType);
   });
 
-  const totalPages = Math.ceil(filteredRecipes.length / 4);
+  const totalPages = Math.ceil(filteredRecipes.length / RECIPE_PER_PAGE);
 
   filteredRecipes = filteredRecipes.slice(
     (currentPage - 1) * 4,
@@ -135,6 +137,7 @@ export default function UserRecipes() {
                 key={recipe.id}
                 recipe={recipe}
                 username={user.user_metadata.username}
+                linkToDetail={`/${user.user_metadata.username}/recipes/${recipe.id}`}
               />
             ))}
         </div>

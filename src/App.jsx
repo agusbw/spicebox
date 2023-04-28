@@ -9,17 +9,21 @@ import useRecipe from "./hooks/useRecipe";
 
 import RootLayout from "./components/layouts/RootLayout";
 import PrivateRoute from "./components/PrivateRoute";
+import PrivateRecipeRoute from "./components/PrivateRecipeRoute";
 
 import Home from "./pages/index";
 import Login from "./pages/login";
 import Register from "./pages/register";
+import PublicRecipes from "./pages/recipes";
 import UserRecipes from "./pages/user/recipes";
 import AddRecipe from "./pages/user/recipes/add";
+import UpdateRecipe from "./pages/user/recipes/update";
+import UserDetailRecipe from "./pages/user/recipes/detail";
 import NotFound from "./pages/404";
 
 function App() {
   const { user } = useAuth();
-  const { getUserRecipes } = useRecipe();
+  const { getUserRecipes, getRecipe, getPublicRecipes } = useRecipe();
 
   const router = createBrowserRouter([
     {
@@ -45,6 +49,30 @@ function App() {
         {
           path: "/:username/recipes/add",
           element: <PrivateRoute component={AddRecipe} />,
+        },
+        {
+          path: "/:username/recipes/:recipeId/update",
+          element: <PrivateRecipeRoute component={UpdateRecipe} />,
+          loader: async ({ params }) => {
+            const recipe = await getRecipe(params.recipeId);
+            return recipe;
+          },
+        },
+        {
+          path: "/:username/recipes/:recipeId",
+          element: <PrivateRecipeRoute component={UserDetailRecipe} />,
+          loader: async ({ params }) => {
+            const recipe = await getRecipe(params.recipeId);
+            return recipe;
+          },
+        },
+        {
+          path: "/recipes",
+          element: <PrivateRoute component={PublicRecipes} />,
+          loader: async () => {
+            const recipes = await getPublicRecipes();
+            return recipes;
+          },
         },
       ],
     },

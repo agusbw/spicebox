@@ -15,7 +15,7 @@ export default function Navbar() {
   };
 
   return (
-    <div className="navbar fixed z-50 top-0 glass lg:px-20">
+    <div className="navbar fixed z-50 top-0 bg-white lg:px-20">
       <div className="flex-1">
         <a className="btn btn-ghost normal-case md:text-3xl font-thin text-lg p-0 font-pacifico text-secondary">
           SpiceBox
@@ -25,7 +25,7 @@ export default function Navbar() {
         <ul className="menu menu-horizontal px-1">
           <li tabIndex="0">
             <a>
-              Get Recipes
+              Menu
               <svg
                 className="fill-current"
                 xmlns="http://www.w3.org/2000/svg"
@@ -37,6 +37,9 @@ export default function Navbar() {
               </svg>
             </a>
             <ul className="p-2 bg-base-100 shadow ">
+              <li>
+                <Link to={"/"}>Home</Link>
+              </li>
               <li>
                 <Link to={"/recipes/random"}>Get Random Recipe</Link>
               </li>
