@@ -1,29 +1,41 @@
 import { Link, useLoaderData } from "react-router-dom";
 import { RECIPE_IMAGE_URL } from "../../constants";
 import Container from "../../components/layouts/Container";
-import DetailRecipeContainer from "../../components/layouts/DetailRecipeContainer";
 import { getInitials, joinWords, getFullName } from "../../utils/functions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import React from "react";
 
 export default function PublicDetailRecipe() {
   const recipe = useLoaderData();
+  const [showIngredients, setShowIngredients] = React.useState(true);
+  const [showInstructions, setShowInstructions] = React.useState(true);
+
+  const handleDisplayInstructions = () => {
+    setShowInstructions(!showInstructions);
+  };
+
+  const handleDisplayIngredients = () => {
+    setShowIngredients(!showIngredients);
+  };
 
   return (
-    <Container className="min-h-screen mx-auto">
+    <Container className="min-h-screen mx-auto mb-20">
       <div className="md:max-w-5xl mx-auto">
         <div className="mb-4">
-          <h1 className="text-3xl lg:text-5xl font-vidaloka mb-2">
+          <h1 className="text-2xl lg:text-5xl font-vidaloka mb-2 ">
             {recipe.title}{" "}
             {recipe.is_halal ? (
-              <span className="text-lg align-middle bg-green-400 px-3 py-2 rounded-full font-semibold font-sans">
+              <span className="text-sm lg:text-lg align-middle bg-green-400 px-3 py-2 rounded-full font-semibold font-sans">
                 Halal
               </span>
             ) : (
-              <span className="text-lg align-middle bg-red-400 px-3 py-2 rounded-full font-semibold font-sans">
+              <span className="text-sm lg:text-lg align-middle bg-red-400 px-3 py-2 rounded-full font-semibold font-sans">
                 Non-Halal
               </span>
             )}
           </h1>
-          <div className="">
+          <div className="flex items-center">
             <div className="avatar placeholder">
               <div className="bg-neutral-focus text-neutral-content rounded-full w-10">
                 <span>
@@ -34,7 +46,7 @@ export default function PublicDetailRecipe() {
                 </span>
               </div>
             </div>
-            <span className="ml-2">
+            <p className="ml-2">
               By{" "}
               {getFullName(recipe.profiles.firstname, recipe.profiles.lastname)}
               /
@@ -45,7 +57,7 @@ export default function PublicDetailRecipe() {
               >
                 @{recipe.profiles.username}
               </Link>
-            </span>
+            </p>
           </div>
           <div className="divider"></div>
           <p>{recipe.description ? recipe.description : "No description"}</p>
@@ -69,7 +81,7 @@ export default function PublicDetailRecipe() {
             className="lg:w-1/2 w-full object-cover mx-auto"
           />
 
-          <div className="stats shadow w-fit mx-auto">
+          <div className="md:stats shadow w-fit mx-auto">
             <div className="stat">
               <div className="stat-figure text-secondary">
                 <svg
@@ -154,25 +166,57 @@ export default function PublicDetailRecipe() {
             </div>
           </div>
 
-          <DetailRecipeContainer className={"bg-orange-100"}>
-            <h2 className="text-2xl font-vidaloka mb-4">Ingredients</h2>
-            {recipe.ingredients.map((ingredient, index) => (
-              <div className="font-light text-lg" key={index}>
-                <p>{ingredient}</p>
-                <div className="divider m-0"></div>
-              </div>
-            ))}
-          </DetailRecipeContainer>
-          <DetailRecipeContainer className={"bg-teal-50"}>
-            <h2 className="text-2xl font-vidaloka mb-4">Cooking Steps</h2>
-            {recipe.instructions.map((instruction, index) => (
-              <div className="font-light text-lg" key={index}>
-                <p>Step {index + 1}</p>
-                <p>{instruction}</p>
-                <div className="divider m-0"></div>
-              </div>
-            ))}
-          </DetailRecipeContainer>
+          <div className="divider"></div>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleDisplayIngredients}
+              className="bg-primary hover:bg-primary-focus text-white font-bold text-2xl w-8 h-8 btn-circle rounded-full"
+            >
+              {showIngredients ? "-" : "+"}
+            </button>
+            <h2 className="text-2xl font-vidaloka">Ingredients</h2>
+          </div>
+          <div className="overflow-hidden">
+            <ul
+              className={`transition-all duration-300 ease-in-out ml-3 ${
+                showIngredients ? "max-h-[1000px]" : "max-h-0"
+              }`}
+            >
+              {recipe.ingredients.map((ingredient, index) => (
+                <li key={index} className="font-light text-lg">
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    className="me-2 text-sm text-accent"
+                  />
+                  {ingredient}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleDisplayInstructions}
+              className="bg-secondary text-white hover:bg-secondary-focus font-bold text-2xl w-8 h-8 btn-circle rounded-full"
+            >
+              {showInstructions ? "-" : "+"}
+            </button>
+            <h2 className="text-2xl font-vidaloka">Cooking Steps</h2>
+          </div>
+          <div className="overflow-hidden">
+            <ol
+              className={`list-decimal transition-all duration-300 ease-in-out ml-8 ${
+                showInstructions ? "max-h-[1000px]" : "max-h-0"
+              }`}
+            >
+              {recipe.instructions.map((instruction, index) => (
+                <li key={index} className="font-light text-lg">
+                  {instruction}
+                </li>
+              ))}
+            </ol>
+          </div>
         </div>
       </div>
     </Container>

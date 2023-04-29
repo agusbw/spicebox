@@ -14,16 +14,18 @@ import PrivateRecipeRoute from "./components/PrivateRecipeRoute";
 import Home from "./pages/index";
 import Login from "./pages/login";
 import Register from "./pages/register";
-import PublicRecipes from "./pages/recipes";
+import PublicRecipes from "./pages/recipes/index";
 import UserRecipes from "./pages/user/recipes";
 import AddRecipe from "./pages/user/recipes/add";
 import UpdateRecipe from "./pages/user/recipes/update";
 import UserDetailRecipe from "./pages/user/recipes/detail";
+import PublicDetailRecipe from "./pages/recipes/detail";
 import NotFound from "./pages/404";
 
 function App() {
   const { user } = useAuth();
-  const { getUserRecipes, getRecipe, getPublicRecipes } = useRecipe();
+  const { getUserRecipes, getRecipe, getPublicRecipes, getUserAndRecipe } =
+    useRecipe();
 
   const router = createBrowserRouter([
     {
@@ -72,6 +74,14 @@ function App() {
           loader: async () => {
             const recipes = await getPublicRecipes();
             return recipes;
+          },
+        },
+        {
+          path: "/recipes/:recipeId",
+          element: <PrivateRoute component={PublicDetailRecipe} />,
+          loader: async ({ params }) => {
+            const recipe = await getUserAndRecipe(params.recipeId);
+            return recipe;
           },
         },
       ],
