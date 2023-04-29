@@ -20,7 +20,7 @@ export default function PublicDetailRecipe() {
   };
 
   return (
-    <Container className="min-h-screen mx-auto mb-20">
+    <Container className="min-h-screen mx-auto">
       <div className="md:max-w-5xl mx-auto">
         <div className="mb-4">
           <h1 className="text-2xl lg:text-5xl font-vidaloka mb-2 ">
