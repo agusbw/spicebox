@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { RECIPE_IMAGE_URL } from "../constants";
 
 export default function PublicRecipeCard({ recipe }) {
@@ -27,9 +28,12 @@ export default function PublicRecipeCard({ recipe }) {
           ))}
         </div>
         <div className="card-actions justify-end">
-          <button className="btn btn-primary rounded-full btn-sm">
+          <Link
+            className="btn btn-primary rounded-full btn-sm"
+            to={`/recipes/${recipe.id}`}
+          >
             Detail
-          </button>
+          </Link>
         </div>
       </div>
     </div>

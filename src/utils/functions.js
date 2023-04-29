@@ -7,3 +7,11 @@ export const splitWordsToArray = (string) => {
 export const getFullName = (firstName, lastName) => {
   return `${firstName} ${lastName}`;
 };
+
+export const getInitials = (firstName, lastName) => {
+  return `${firstName[0]}${lastName[0]}`;
+};
+
+export const joinWords = (array) => {
+  return array.join(", ");
+};

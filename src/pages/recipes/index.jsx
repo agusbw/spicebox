@@ -1,9 +1,8 @@
 import { useLoaderData } from "react-router-dom";
 import React from "react";
-import { TextInput, Select } from "../components/FormComponents";
-// import RecipeCard from "../components/RecipeCard";
-import PublicRecipeCard from "../components/PublicRecipeCard";
-import PaginationButton from "../components/PaginationButton";
+import { TextInput, Select } from "../../components/FormComponents";
+import PublicRecipeCard from "../../components/PublicRecipeCard";
+import PaginationButton from "../../components/PaginationButton";
 
 const RECIPE_PER_PAGE = 4;
 
@@ -112,6 +111,22 @@ export default function PublicRecipes() {
                 placeholder="Search recipe by title!"
                 onChange={handleSearchChange}
               />
+            </div>
+            <div className="collapse border border-base-300 bg-base-100 rounded-box collapse-arrow w-fit mt-4">
+              <input type="checkbox" />
+              <div className="collapse-title text-md font-medium">
+                Informations
+              </div>
+              <div className="collapse-content">
+                <p>
+                  <span className="badge badge-secondary">badge</span> show
+                  recipe&apos;s dish type
+                </p>
+                <p>
+                  <span className="badge badge-warning">badge</span> show
+                  recipe&apos;s diets type
+                </p>
+              </div>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3 mt-5">
