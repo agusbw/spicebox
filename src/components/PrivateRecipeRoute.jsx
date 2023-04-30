@@ -20,8 +20,6 @@ const PrivateRecipeRoute = ({ component: Component, ...rest }) => {
     return <Navigate to="/" />;
   }
 
-  console.log(user);
-
   return <Component {...rest} />;
 };
 
