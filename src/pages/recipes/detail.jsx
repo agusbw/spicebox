@@ -1,4 +1,5 @@
 import { Link, useLoaderData } from "react-router-dom";
+import thumbnail from "../../assets/image-thumbnail.jpg";
 import { RECIPE_IMAGE_URL } from "../../constants";
 import Container from "../../components/layouts/Container";
 import { getInitials, joinWords, getFullName } from "../../utils/functions";
@@ -76,7 +77,9 @@ export default function PublicDetailRecipe() {
         </div>
         <div className="flex flex-col gap-4">
           <img
-            src={`${RECIPE_IMAGE_URL}/${recipe.image}`}
+            src={
+              recipe.image ? `${RECIPE_IMAGE_URL}/${recipe.image}` : thumbnail
+            }
             alt="Food Image"
             className="lg:w-1/2 w-full object-cover mx-auto"
           />
@@ -194,6 +197,8 @@ export default function PublicDetailRecipe() {
               ))}
             </ul>
           </div>
+
+          <div className="divider"></div>
 
           <div className="flex items-center gap-2">
             <button

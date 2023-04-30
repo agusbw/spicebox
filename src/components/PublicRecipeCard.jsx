@@ -1,11 +1,14 @@
 import { Link } from "react-router-dom";
 import { RECIPE_IMAGE_URL } from "../constants";
+import thumbnail from "../assets/image-thumbnail.jpg";
 
 export default function PublicRecipeCard({ recipe }) {
   return (
     <div className="card bg-base-100 shadow-xl image-full">
       <figure>
-        <img src={`${RECIPE_IMAGE_URL}/${recipe.image}`} />
+        <img
+          src={recipe.image ? `${RECIPE_IMAGE_URL}/${recipe.image}` : thumbnail}
+        />
       </figure>
       <div className="card-body pt-10 relative">
         {recipe.is_halal && (

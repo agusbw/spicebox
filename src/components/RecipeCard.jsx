@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { RECIPE_IMAGE_URL } from "../constants";
+import thumbnail from "../assets/image-thumbnail.jpg";
 
 export default function RecipeCard({ recipe, linkToDetail }) {
   return (
@@ -9,7 +10,7 @@ export default function RecipeCard({ recipe, linkToDetail }) {
       </div>
 
       <img
-        src={`${RECIPE_IMAGE_URL}/${recipe.image}`}
+        src={recipe.image ? `${RECIPE_IMAGE_URL}/${recipe.image}` : thumbnail}
         alt="Food"
         className="object-cover w-full h-60 "
       />

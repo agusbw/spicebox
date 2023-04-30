@@ -3,6 +3,7 @@ import { useLoaderData, useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../../contexts/Auth";
 import DetailRecipeContainer from "../../../components/layouts/DetailRecipeContainer";
 import profile from "../../../assets/profile.png";
+import thumbnail from "../../../assets/image-thumbnail.jpg";
 import { RECIPE_IMAGE_URL } from "../../../constants";
 import useRecipe from "../../../hooks/useRecipe";
 import Swal from "sweetalert2";
@@ -41,7 +42,11 @@ export default function UserDetailRecipe() {
             <div className="flex flex-col gap-3 lg:w-8/12">
               <div className="rounded-md shadow-md w-full bg-base-100 border">
                 <img
-                  src={`${RECIPE_IMAGE_URL}/${recipe.image}`}
+                  src={
+                    recipe.image
+                      ? `${RECIPE_IMAGE_URL}/${recipe.image}`
+                      : thumbnail
+                  }
                   alt="Food Image"
                   className="w-full h-56 object-cover rounded-md"
                 />
