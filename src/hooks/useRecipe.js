@@ -30,7 +30,8 @@ export default function useRecipe() {
       const { data } = await supabase
         .from("recipes")
         .select("*")
-        .eq("is_public", true);
+        .eq("is_public", true)
+        .order("created_at", { ascending: false });
       return data;
     } catch (error) {
       console.log(error);

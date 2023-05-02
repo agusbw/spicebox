@@ -1,17 +1,18 @@
 import { Link } from "react-router-dom";
 import { RECIPE_IMAGE_URL } from "../constants";
+import thumbnail from "../assets/image-thumbnail.jpg";
 
 export default function RecipeCard({ recipe, linkToDetail }) {
   return (
-    <div className="bg-base-100 shadow-xl image-full relative">
-      <div className="absolute z-10 p-2 right-0 top-0 bg-red-400/60 align-middle">
+    <div className="bg-base-100 shadow-xl image-full rounded-xl relative">
+      <div className="absolute z-10 rounded-se-xl p-2 right-0 top-0 bg-red-400/60 align-middle">
         <span className="text-2xl">{recipe.is_public ? "👥" : "🔒"}</span>
       </div>
 
       <img
-        src={`${RECIPE_IMAGE_URL}/${recipe.image}`}
+        src={recipe.image ? `${RECIPE_IMAGE_URL}/${recipe.image}` : thumbnail}
         alt="Food"
-        className="object-cover w-full h-60 "
+        className="object-cover w-full rounded-t-xl h-60"
       />
       <div className="p-5 mb-10">
         <h2 className="card-title text-xl mb-1">{recipe.title}</h2>
@@ -25,7 +26,10 @@ export default function RecipeCard({ recipe, linkToDetail }) {
             Types:{" "}
             {recipe.dish_types.map((dishType, index) => {
               return (
-                <span key={index} className="badge badge-md badge-accent me-1">
+                <span
+                  key={index}
+                  className="badge badge-md badge-secondary me-1"
+                >
                   {dishType}
                 </span>
               );

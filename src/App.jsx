@@ -14,12 +14,14 @@ import PrivateRecipeRoute from "./components/PrivateRecipeRoute";
 import Home from "./pages/index";
 import Login from "./pages/login";
 import Register from "./pages/register";
-import PublicRecipes from "./pages/recipes/index";
+import PublicRecipes from "./pages/recipes/";
 import UserRecipes from "./pages/user/recipes";
 import AddRecipe from "./pages/user/recipes/add";
 import UpdateRecipe from "./pages/user/recipes/update";
 import UserDetailRecipe from "./pages/user/recipes/detail";
 import PublicDetailRecipe from "./pages/recipes/detail";
+import RandomDetailRecipe from "./pages/recipes/random/detail";
+import RandomRecipe from "./pages/recipes/random/";
 import NotFound from "./pages/404";
 
 function App() {
@@ -75,6 +77,14 @@ function App() {
             const recipes = await getPublicRecipes();
             return recipes;
           },
+        },
+        {
+          path: "/recipes/random",
+          element: <PrivateRoute component={RandomRecipe} />,
+        },
+        {
+          path: "/recipes/random/:recipeId",
+          element: <PrivateRoute component={RandomDetailRecipe} />,
         },
         {
           path: "/recipes/:recipeId",

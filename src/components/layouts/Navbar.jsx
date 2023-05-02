@@ -15,11 +15,12 @@ export default function Navbar() {
   };
 
   return (
-    <div className="navbar fixed z-50 top-0 bg-white lg:px-20">
+    <div className="navbar fixed z-50 top-0 glass lg:px-20">
       <div className="flex-1">
         <a className="btn btn-ghost normal-case md:text-3xl font-thin text-lg p-0 font-pacifico text-secondary">
           SpiceBox
         </a>
+        <div className="ml-4 mt-2"></div>
       </div>
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1">

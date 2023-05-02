@@ -12,7 +12,7 @@ import { TextInput, Select } from "../../../components/FormComponents";
 import RecipeCard from "../../../components/RecipeCard";
 import PaginationButton from "../../../components/PaginationButton";
 
-const RECIPE_PER_PAGE = 4;
+const RECIPE_PER_PAGE = 8;
 
 export default function UserRecipes() {
   const recipes = useLoaderData();
@@ -78,8 +78,8 @@ export default function UserRecipes() {
   const totalPages = Math.ceil(filteredRecipes.length / RECIPE_PER_PAGE);
 
   filteredRecipes = filteredRecipes.slice(
-    (currentPage - 1) * 4,
-    currentPage * 4
+    (currentPage - 1) * RECIPE_PER_PAGE,
+    currentPage * RECIPE_PER_PAGE
   );
 
   const handlePageChange = (page) => {
