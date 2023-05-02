@@ -54,10 +54,10 @@ export default function UserDetailRecipe() {
                 />
               </div>
               <DetailRecipeContainer>
-                <h1 className="text-3xl font-oswald font-bold text-secondary">
+                <h1 className="text-4xl font-oswald font-bold text-secondary">
                   {recipe.title}
                 </h1>
-                <p>
+                <p className="text-lg mt-4 text-justify font-light">
                   {recipe.description ? recipe.description : "No description"}
                 </p>
               </DetailRecipeContainer>

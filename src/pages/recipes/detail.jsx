@@ -12,7 +12,7 @@ export default function PublicDetailRecipe() {
     <Container className="min-h-screen mx-auto">
       <div className="md:max-w-5xl mx-auto">
         <div className="mb-4">
-          <h1 className="text-2xl lg:text-5xl font-oswald font-bold text-secondary mb-2 ">
+          <h1 className="text-4xl lg:text-5xl font-oswald font-bold text-secondary mb-4 mt-1 ">
             {recipe.title}{" "}
             {recipe.is_halal ? (
               <span className="text-sm text-success-content lg:text-lg align-middle bg-success px-3 py-2 rounded-full font-semibold font-sans">
@@ -49,7 +49,9 @@ export default function PublicDetailRecipe() {
             </p>
           </div>
           <div className="divider"></div>
-          <p>{recipe.description ? recipe.description : "No description"}</p>
+          <p className="text-lg text-justify font-light mb-3">
+            {recipe.description ? recipe.description : "No description"}
+          </p>
           <p className="text-primary font-bold font-oswald text-2xl">
             Diets:{" "}
             {recipe?.diets?.length <= 0 ? (
