@@ -12,7 +12,7 @@ export default function PublicRecipeCard({ recipe }) {
       </figure>
       <div className="card-body pt-10 relative">
         {recipe.is_halal && (
-          <div className="badge badge-accent absolute top-0 right-0 font-semibold m-3">
+          <div className="badge badge-success absolute top-0 right-0 font-semibold m-3">
             Halal
           </div>
         )}

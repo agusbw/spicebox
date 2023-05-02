@@ -15,3 +15,7 @@ export const getInitials = (firstName, lastName) => {
 export const joinWords = (array) => {
   return array.join(", ");
 };
+
+export const capitalizeFristLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
