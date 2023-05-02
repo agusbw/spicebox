@@ -7,7 +7,9 @@ import thumbnail from "../../../assets/image-thumbnail.jpg";
 import { RECIPE_IMAGE_URL } from "../../../constants";
 import useRecipe from "../../../hooks/useRecipe";
 import Swal from "sweetalert2";
+import LineThroughText from "../../../components/LineThroughList";
 import { getFullName } from "../../../utils/functions";
+import CollapsibleList from "../../../components/CollapsibleList";
 
 export default function UserDetailRecipe() {
   const recipe = useLoaderData();
@@ -52,13 +54,17 @@ export default function UserDetailRecipe() {
                 />
               </div>
               <DetailRecipeContainer>
-                <h1 className="text-3xl font-vidaloka">{recipe.title}</h1>
+                <h1 className="text-3xl font-oswald font-bold text-secondary">
+                  {recipe.title}
+                </h1>
                 <p>
                   {recipe.description ? recipe.description : "No description"}
                 </p>
               </DetailRecipeContainer>
               <DetailRecipeContainer>
-                <h2 className="text-2xl font-vidaloka">Recipe Details</h2>
+                <h2 className="text-2xl font-oswald text-secondary">
+                  Recipe Details
+                </h2>
                 <p>
                   {recipe.dish_types.length > 0 ? (
                     <span>
@@ -103,7 +109,7 @@ export default function UserDetailRecipe() {
                     />
                   </div>
                   <div className="text-center">
-                    <p className="font-vidaloka text-lg">
+                    <p className="font-oswald text-lg">
                       {user &&
                         getFullName(
                           user.user_metadata.firstname,
@@ -128,25 +134,25 @@ export default function UserDetailRecipe() {
                   </button>
                 </div>
               </DetailRecipeContainer>
-              <DetailRecipeContainer className={"bg-orange-100"}>
-                <h2 className="text-2xl font-vidaloka mb-4">Ingredients</h2>
-                {recipe.ingredients.map((ingredient, index) => (
-                  <div className="font-light text-lg" key={index}>
-                    <p>{ingredient}</p>
-                    <div className="divider m-0"></div>
-                  </div>
+              <div className="divider"></div>
+              <CollapsibleList variant="secondary" title="Ingredients">
+                {recipe &&
+                  recipe?.ingredients.map((ingredient, index) => (
+                    <li key={index} className="font-light text-lg">
+                      <LineThroughText variant="secondary" text={ingredient} />
+                    </li>
+                  ))}
+              </CollapsibleList>
+              <div className="divider"></div>
+              <CollapsibleList variant="primary" title="Cooking Steps">
+                {recipe?.instructions.map((instruction, index) => (
+                  <li key={index} className="font-light text-lg">
+                    <li key={index} className="font-light text-lg">
+                      <LineThroughText variant="primary" text={instruction} />
+                    </li>
+                  </li>
                 ))}
-              </DetailRecipeContainer>
-              <DetailRecipeContainer className={"bg-teal-50"}>
-                <h2 className="text-2xl font-vidaloka mb-4">Cooking Steps</h2>
-                {recipe.instructions.map((instruction, index) => (
-                  <div className="font-light text-lg" key={index}>
-                    <p>Step {index + 1}</p>
-                    <p>{instruction}</p>
-                    <div className="divider m-0"></div>
-                  </div>
-                ))}
-              </DetailRecipeContainer>
+              </CollapsibleList>
             </div>
             <DetailRecipeContainer
               className={"hidden lg:block sticky top-24 w-4/12 h-fit"}
@@ -160,7 +166,7 @@ export default function UserDetailRecipe() {
                   />
                 </div>
                 <div className="text-center">
-                  <p className="font-vidaloka text-lg">
+                  <p className="font-oswald text-lg">
                     {user &&
                       getFullName(
                         user.user_metadata.firstname,

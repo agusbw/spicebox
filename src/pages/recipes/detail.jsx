@@ -3,35 +3,23 @@ import thumbnail from "../../assets/image-thumbnail.jpg";
 import { RECIPE_IMAGE_URL } from "../../constants";
 import Container from "../../components/layouts/Container";
 import { getInitials, joinWords, getFullName } from "../../utils/functions";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
-import React from "react";
+import LineThroughText from "../../components/LineThroughList";
+import CollapsibleList from "../../components/CollapsibleList";
 
 export default function PublicDetailRecipe() {
   const recipe = useLoaderData();
-  const [showIngredients, setShowIngredients] = React.useState(true);
-  const [showInstructions, setShowInstructions] = React.useState(true);
-
-  const handleDisplayInstructions = () => {
-    setShowInstructions(!showInstructions);
-  };
-
-  const handleDisplayIngredients = () => {
-    setShowIngredients(!showIngredients);
-  };
-
   return (
     <Container className="min-h-screen mx-auto">
       <div className="md:max-w-5xl mx-auto">
         <div className="mb-4">
-          <h1 className="text-2xl lg:text-5xl font-vidaloka mb-2 ">
+          <h1 className="text-2xl lg:text-5xl font-oswald font-bold text-secondary mb-2 ">
             {recipe.title}{" "}
             {recipe.is_halal ? (
-              <span className="text-sm lg:text-lg align-middle bg-green-400 px-3 py-2 rounded-full font-semibold font-sans">
+              <span className="text-sm text-success-content lg:text-lg align-middle bg-success px-3 py-2 rounded-full font-semibold font-sans">
                 Halal
               </span>
             ) : (
-              <span className="text-sm lg:text-lg align-middle bg-red-400 px-3 py-2 rounded-full font-semibold font-sans">
+              <span className="text-sm text-error-content lg:text-lg align-middle bg-error px-3 py-2 rounded-full font-semibold font-sans">
                 Non-Halal
               </span>
             )}
@@ -62,13 +50,18 @@ export default function PublicDetailRecipe() {
           </div>
           <div className="divider"></div>
           <p>{recipe.description ? recipe.description : "No description"}</p>
-          <p>
+          <p className="text-primary font-bold font-oswald text-2xl">
             Diets:{" "}
-            {recipe.diets.length <= 0 ? (
-              <span className="badge badge-warning">No diets</span>
+            {recipe?.diets?.length <= 0 ? (
+              <span className="badge badge-warning font-sans font-normal">
+                No diets
+              </span>
             ) : (
-              recipe.diets.map((diet, index) => (
-                <span key={index} className="badge badge-primary mr-1">
+              recipe?.diets?.map((diet, index) => (
+                <span
+                  key={index}
+                  className="badge badge-primary mr-1 font-sans font-normal"
+                >
                   {diet}
                 </span>
               ))
@@ -168,60 +161,25 @@ export default function PublicDetailRecipe() {
               <div className="stat-desc"></div>
             </div>
           </div>
-
           <div className="divider"></div>
-
-          <div className="flex items-center gap-2">
-            <button
-              onClick={handleDisplayIngredients}
-              className="bg-primary hover:bg-primary-focus text-white font-bold text-2xl w-8 h-8 btn-circle rounded-full"
-            >
-              {showIngredients ? "-" : "+"}
-            </button>
-            <h2 className="text-2xl font-vidaloka">Ingredients</h2>
-          </div>
-          <div className="overflow-hidden">
-            <ul
-              className={`transition-all duration-300 ease-in-out ml-3 ${
-                showIngredients ? "max-h-[1000px]" : "max-h-0"
-              }`}
-            >
-              {recipe.ingredients.map((ingredient, index) => (
+          <CollapsibleList variant="secondary" title="Ingredients">
+            {recipe &&
+              recipe?.ingredients.map((ingredient, index) => (
                 <li key={index} className="font-light text-lg">
-                  <FontAwesomeIcon
-                    icon={faCheck}
-                    className="me-2 text-sm text-accent"
-                  />
-                  {ingredient}
+                  <LineThroughText variant="secondary" text={ingredient} />
                 </li>
               ))}
-            </ul>
-          </div>
-
+          </CollapsibleList>
           <div className="divider"></div>
-
-          <div className="flex items-center gap-2">
-            <button
-              onClick={handleDisplayInstructions}
-              className="bg-secondary text-white hover:bg-secondary-focus font-bold text-2xl w-8 h-8 btn-circle rounded-full"
-            >
-              {showInstructions ? "-" : "+"}
-            </button>
-            <h2 className="text-2xl font-vidaloka">Cooking Steps</h2>
-          </div>
-          <div className="overflow-hidden">
-            <ol
-              className={`list-decimal transition-all duration-300 ease-in-out ml-8 ${
-                showInstructions ? "max-h-[1000px]" : "max-h-0"
-              }`}
-            >
-              {recipe.instructions.map((instruction, index) => (
+          <CollapsibleList variant="primary" title="Cooking Steps">
+            {recipe?.instructions.map((instruction, index) => (
+              <li key={index} className="font-light text-lg">
                 <li key={index} className="font-light text-lg">
-                  {instruction}
+                  <LineThroughText variant="primary" text={instruction} />
                 </li>
-              ))}
-            </ol>
-          </div>
+              </li>
+            ))}
+          </CollapsibleList>
         </div>
       </div>
     </Container>
