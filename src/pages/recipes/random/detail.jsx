@@ -26,13 +26,13 @@ export default function PublicDetailRecipe() {
     <Container className="min-h-screen mx-auto">
       <div className="md:max-w-5xl mx-auto">
         <div className="mb-4">
-          <h1 className="text-2xl lg:text-5xl font-oswald font-bold text-secondary mb-2 ">
+          <h1 className="text-4xl lg:text-5xl font-oswald font-bold text-secondary mb-4 mt-1">
             {recipe && recipe.title}
           </h1>
 
           <div className="divider"></div>
           <div
-            className="content"
+            className="content mb-3 text-justify"
             dangerouslySetInnerHTML={{ __html: recipe?.summary }}
           ></div>
           <p className="text-primary font-bold font-oswald text-2xl">

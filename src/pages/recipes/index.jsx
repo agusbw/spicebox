@@ -114,8 +114,8 @@ export default function PublicRecipes() {
                 onChange={handleSearchChange}
               />
             </div>
-            <div className="flex items-center mt-4 gap-4">
-              <div className="collapse border border-base-300 bg-base-100 rounded-box collapse-arrow w-fit">
+            <div className="flex lg:flex-row flex-col items-center mt-4 gap-4">
+              <div className="collapse border border-base-300 bg-base-100 rounded-box collapse-arrow w-full md:w-fit">
                 <input type="checkbox" />
                 <div className="collapse-title text-md font-medium">
                   <FontAwesomeIcon
@@ -137,9 +137,9 @@ export default function PublicRecipes() {
               </div>
               <Link
                 to="/recipes/random"
-                className="btn rounded-md btn-secondary"
+                className="btn rounded-md btn-secondary self-start md:self-auto"
               >
-                Search random recipe
+                Get random recipe
               </Link>
             </div>
           </div>
@@ -156,53 +156,56 @@ export default function PublicRecipes() {
             handlePageChange={handlePageChange}
           />
         </div>
-        <div className="drawer-side bg-base-200 shadow-md pt-16">
+        <div className="drawer-side bg-base-100 shadow-md pt-16">
           <label htmlFor="my-drawer-2" className="drawer-overlay" />
-          <ul className="p-4 w-80 bg-base-200 text-base-content flex flex-col">
-            <li className="">
-              <h3 className="text-2xl">Filters</h3>
-              <div className="divider"></div>
-            </li>
-            <li className="mb-4">
-              <label htmlFor="">
-                <p>Dish types</p>
-              </label>
-              <Select variant="secondary" onChange={handleDishTypeChange}>
-                <option value="all">All types</option>
-                <option value="Breakfast">Breakfast</option>
-                <option value="Lunch">Lunch</option>
-                <option value="Dinner">Dinner</option>
-                <option value="Snack">Snack</option>
-              </Select>
-            </li>
-            <li className="mb-4">
-              <label>
-                <p>Recipe difficulty</p>
-              </label>
-              <Select
-                variant="secondary"
-                className="w-1/2"
-                onChange={handleDifficultyChange}
-              >
-                <option value="all">Difficulty</option>
-                <option value="Easy">Easy</option>
-                <option value="Medium">Medium</option>
-                <option value="Hard">Hard</option>
-              </Select>
-            </li>
-            <li className="mb-4">
-              <div className="form-control w-fit">
-                <label className="cursor-pointer label">
-                  <span className="mr-2">Halal only</span>
-                  <input
-                    type="checkbox"
-                    defaultChecked={false}
-                    className="checkbox checkbox-secondary"
-                    onChange={handleHalalChange}
-                  />
+          <ul className="p-4 w-80 bg-base-100 text-base-content flex flex-col">
+            <div className="m-6">
+              <li className="p-3 mb-6 text-center border-primary-focus bg-primary-focus">
+                <h3 className="text-2xl font-bold text-white">FILTERS</h3>
+              </li>
+              <li className="mb-4">
+                <label htmlFor="">
+                  <p className="text-lg font-bold text-secondary-focus">
+                    Dish types
+                  </p>
                 </label>
-              </div>
-            </li>
+                <Select onChange={handleDishTypeChange}>
+                  <option value="all">All types</option>
+                  <option value="Breakfast">Breakfast</option>
+                  <option value="Lunch">Lunch</option>
+                  <option value="Dinner">Dinner</option>
+                  <option value="Snack">Snack</option>
+                </Select>
+              </li>
+              <li className="mb-4">
+                <label>
+                  <p className="text-lg font-bold text-secondary-focus">
+                    Recipe difficulty
+                  </p>
+                </label>
+                <Select className="w-1/2" onChange={handleDifficultyChange}>
+                  <option value="all">Difficulty</option>
+                  <option value="Easy">Easy</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Hard">Hard</option>
+                </Select>
+              </li>
+              <li className="mb-4">
+                <div className="form-control w-fit">
+                  <label className="cursor-pointer label">
+                    <span className="mr-2 text-lg font-bold text-secondary-focus">
+                      Halal only
+                    </span>
+                    <input
+                      type="checkbox"
+                      defaultChecked={false}
+                      className="checkbox checkbox-secondary"
+                      onChange={handleHalalChange}
+                    />
+                  </label>
+                </div>
+              </li>
+            </div>
           </ul>
         </div>
       </div>

@@ -17,13 +17,13 @@ export default function Navbar() {
   return (
     <div className="navbar fixed z-50 top-0 glass lg:px-20">
       <div className="flex-1">
-        <a className="btn btn-ghost normal-case md:text-3xl font-thin text-lg p-0 font-pacifico text-secondary">
+        <a className="btn btn-ghost normal-case md:text-3xl font-thin text-2xl p-0 font-pacifico text-secondary">
           SpiceBox
         </a>
         <div className="ml-4 mt-2"></div>
       </div>
       <div className="flex-none">
-        <ul className="menu menu-horizontal px-1">
+        <ul className="menu menu-horizontal justify-center px-1">
           <li tabIndex="0">
             <a>
               Menu
@@ -37,15 +37,15 @@ export default function Navbar() {
                 <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
               </svg>
             </a>
-            <ul className="p-2 bg-base-100 shadow ">
+            <ul className="py-2 lg:p-2 bg-base-100 shadow">
               <li>
                 <Link to={"/"}>Home</Link>
               </li>
               <li>
-                <Link to={"/recipes/random"}>Get Random Recipe</Link>
+                <Link to={"/recipes/random"}>Random Recipe</Link>
               </li>
               <li>
-                <Link to={"/recipes"}>Get All Recipes</Link>
+                <Link to={"/recipes"}>All Recipes</Link>
               </li>
             </ul>
           </li>
