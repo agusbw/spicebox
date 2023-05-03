@@ -75,7 +75,7 @@ export default function PublicDetailRecipe() {
             src={
               recipe.image ? `${RECIPE_IMAGE_URL}/${recipe.image}` : thumbnail
             }
-            alt="Food Image"
+            alt={recipe.title}
             className="lg:w-1/2 w-full object-cover mx-auto"
           />
 

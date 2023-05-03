@@ -56,7 +56,7 @@ export default function PublicDetailRecipe() {
         <div className="flex flex-col gap-4">
           <img
             src={recipe ? recipe.image : thumbnail}
-            alt="Food Image"
+            alt={recipe ? recipe.title : "Thumbnail"}
             className="lg:w-1/2 w-full object-cover mx-auto"
           />
           <div className="md:stats shadow w-fit mx-auto">
