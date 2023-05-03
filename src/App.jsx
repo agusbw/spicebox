@@ -8,8 +8,8 @@ import { useAuth } from "./contexts/Auth";
 import useRecipe from "./hooks/useRecipe";
 
 import RootLayout from "./components/layouts/RootLayout";
-import PrivateRoute from "./components/PrivateRoute";
-import PrivateRecipeRoute from "./components/PrivateRecipeRoute";
+import PrivateRoute from "./components/hoc/PrivateRoute";
+import PrivateRecipeRoute from "./components/hoc/PrivateRecipeRoute";
 
 import Home from "./pages/index";
 import Login from "./pages/login";
