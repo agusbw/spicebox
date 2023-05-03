@@ -8,6 +8,7 @@ export default function PublicRecipeCard({ recipe }) {
       <figure>
         <img
           src={recipe.image ? `${RECIPE_IMAGE_URL}/${recipe.image}` : thumbnail}
+          alt={recipe.title}
         />
       </figure>
       <div className="card-body pt-10 relative">

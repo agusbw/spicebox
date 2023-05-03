@@ -58,7 +58,7 @@ export default function Navbar() {
             className="btn btn-ghost btn-circle hover:bg-pink-400 avatar"
           >
             <div className="w-10 rounded-full">
-              <img src={profile} />
+              <img src={profile} alt="Profile" />
             </div>
           </label>
           <ul

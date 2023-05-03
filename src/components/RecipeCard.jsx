@@ -11,9 +11,10 @@ export default function RecipeCard({ recipe, linkToDetail }) {
 
       <img
         src={recipe.image ? `${RECIPE_IMAGE_URL}/${recipe.image}` : thumbnail}
-        alt="Food"
+        alt={recipe.title}
         className="object-cover w-full rounded-t-xl h-60"
       />
+
       <div className="p-5 mb-10">
         <h2 className="card-title text-xl mb-1">{recipe.title}</h2>
 

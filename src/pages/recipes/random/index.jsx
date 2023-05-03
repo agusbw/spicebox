@@ -34,7 +34,11 @@ const Card = ({ recipe }) => {
         <>
           {recipe.image && (
             <figure>
-              <img src={recipe.image} alt="Recipe" className="object-cover" />
+              <img
+                src={recipe.image}
+                alt={recipe.title}
+                className="object-cover"
+              />
             </figure>
           )}
           <div className="card-body">
