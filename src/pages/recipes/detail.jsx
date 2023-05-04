@@ -1,6 +1,6 @@
 import { Link, useLoaderData } from "react-router-dom";
 import thumbnail from "../../assets/image-thumbnail.jpg";
-import { RECIPE_IMAGE_URL } from "../../constants";
+import { RECIPE_IMAGE_URL, AVATAR_IMAGE_URL } from "../../constants";
 import Container from "../../components/layouts/Container";
 import { getInitials, joinWords, getFullName } from "../../utils/functions";
 import LineThroughText from "../../components/LineThroughList";
@@ -8,6 +8,28 @@ import CollapsibleList from "../../components/CollapsibleList";
 
 export default function PublicDetailRecipe() {
   const recipe = useLoaderData();
+
+  const ProfilePicture = () => {
+    if (recipe.profiles.avatar) {
+      return (
+        <img
+          src={`${AVATAR_IMAGE_URL}/${recipe.profiles.avatar}`}
+          alt="profile"
+          className="rounded-full"
+        />
+      );
+    }
+    return (
+      <div className="avatar placeholder">
+        <div className="bg-neutral-focus text-neutral-content rounded-full w-10">
+          <span>
+            {getInitials(recipe.profiles.firstname, recipe.profiles.lastname)}
+          </span>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <Container className="min-h-screen mx-auto">
       <div className="md:max-w-5xl mx-auto">
@@ -25,15 +47,8 @@ export default function PublicDetailRecipe() {
             )}
           </h1>
           <div className="flex items-center">
-            <div className="avatar placeholder">
-              <div className="bg-neutral-focus text-neutral-content rounded-full w-10">
-                <span>
-                  {getInitials(
-                    recipe.profiles.firstname,
-                    recipe.profiles.lastname
-                  )}
-                </span>
-              </div>
+            <div className="w-10 rounded-full">
+              <ProfilePicture />
             </div>
             <p className="ml-2">
               By{" "}

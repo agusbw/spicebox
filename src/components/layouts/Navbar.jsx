@@ -1,18 +1,45 @@
-import profile from "../../assets/profile.png";
+import profileThumbnail from "../../assets/profile.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/Auth";
 import { getInitials } from "../../utils/functions";
+import { useProfile } from "../../contexts/Profile";
+import { AVATAR_IMAGE_URL } from "../../constants";
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const profile = useProfile();
   const { user, signOut } = useAuth();
 
+  console.log(profile);
   const handleSignOut = async () => {
     await signOut();
   };
-
   const handleSignIn = () => {
     navigate("/login");
+  };
+
+  const ProfiePicture = () => {
+    if (profile && user) {
+      if (profile.avatar) {
+        return (
+          <img src={`${AVATAR_IMAGE_URL}/${profile.avatar}`} alt="profile" />
+        );
+      }
+      return (
+        <div className="avatar placeholder">
+          <div className="bg-neutral-focus text-neutral-content rounded-full w-10">
+            <span>
+              {getInitials(
+                user?.user_metadata?.firstname,
+                user?.user_metadata?.lastname
+              )}
+            </span>
+          </div>
+        </div>
+      );
+    } else {
+      return <img src={profileThumbnail} alt="profile" />;
+    }
   };
 
   return (
@@ -62,26 +89,22 @@ export default function Navbar() {
             className="btn btn-ghost btn-circle hover:bg-pink-400 avatar"
           >
             <div className="w-10 rounded-full">
-              {user ? (
-                <div className="avatar placeholder">
-                  <div className="bg-neutral-focus text-neutral-content rounded-full w-10">
-                    <span>
-                      {getInitials(
-                        user.user_metadata.firstname,
-                        user.user_metadata.lastname
-                      )}
-                    </span>
-                  </div>
-                </div>
-              ) : (
-                <img src={profile} alt="profile" />
-              )}
+              <ProfiePicture />
             </div>
           </label>
           <ul
             tabIndex={0}
             className="p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
           >
+            <li>
+              {user ? (
+                <Link to={`/${user?.user_metadata.username}`}>
+                  {user?.user_metadata.username}
+                </Link>
+              ) : (
+                <Link to="/login">Guest</Link>
+              )}
+            </li>
             <li>
               <Link to={`/${user?.user_metadata.username}/recipes`}>
                 My Recipes
