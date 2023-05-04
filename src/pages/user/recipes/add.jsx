@@ -27,7 +27,9 @@ export default function AddUserRecipe() {
 
   React.useEffect(() => {
     if (user && user.user_metadata.username !== username) {
-      navigate(`/${user.user_metadata.username}/recipes`, { replace: true });
+      navigate("/", {
+        replace: true,
+      });
     }
   }, [user, username, navigate]);
 
