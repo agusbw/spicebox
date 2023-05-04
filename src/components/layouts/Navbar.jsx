@@ -1,6 +1,7 @@
 import profile from "../../assets/profile.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/Auth";
+import { getInitials } from "../../utils/functions";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -17,15 +18,18 @@ export default function Navbar() {
   return (
     <div className="navbar fixed z-50 top-0 glass lg:px-20">
       <div className="flex-1">
-        <a className="btn btn-ghost normal-case md:text-3xl font-thin text-2xl p-0 font-pacifico text-secondary">
+        <Link
+          to="/"
+          className="btn btn-ghost normal-case md:text-3xl font-thin text-2xl p-0 font-pacifico text-secondary"
+        >
           SpiceBox
-        </a>
+        </Link>
         <div className="ml-4 mt-2"></div>
       </div>
       <div className="flex-none">
         <ul className="menu menu-horizontal justify-center px-1">
           <li tabIndex="0">
-            <a>
+            <span>
               Menu
               <svg
                 className="fill-current"
@@ -36,7 +40,7 @@ export default function Navbar() {
               >
                 <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
               </svg>
-            </a>
+            </span>
             <ul className="py-2 lg:p-2 bg-base-100 shadow">
               <li>
                 <Link to={"/"}>Home</Link>
@@ -58,7 +62,20 @@ export default function Navbar() {
             className="btn btn-ghost btn-circle hover:bg-pink-400 avatar"
           >
             <div className="w-10 rounded-full">
-              <img src={profile} alt="Profile" />
+              {user ? (
+                <div className="avatar placeholder">
+                  <div className="bg-neutral-focus text-neutral-content rounded-full w-10">
+                    <span>
+                      {getInitials(
+                        user.user_metadata.firstname,
+                        user.user_metadata.lastname
+                      )}
+                    </span>
+                  </div>
+                </div>
+              ) : (
+                <img src={profile} alt="profile" />
+              )}
             </div>
           </label>
           <ul
@@ -71,9 +88,9 @@ export default function Navbar() {
               </Link>
             </li>
             <li>
-              <a onClick={user ? handleSignOut : handleSignIn}>
+              <span onClick={user ? handleSignOut : handleSignIn}>
                 {user ? "Logout" : "Login"}
-              </a>
+              </span>
             </li>
           </ul>
         </div>
