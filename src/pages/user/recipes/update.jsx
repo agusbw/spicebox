@@ -41,7 +41,6 @@ export default function UpdateRecipe() {
     if (!isConfirmed) return;
     let image;
     if (data.image.length > 0) {
-      console.log("ok");
       await deleteRecipeImage(recipe.image);
       const recipeImage = data.image[0];
       image = await uploadRecipeImage(user.id, recipeImage);
