@@ -22,12 +22,15 @@ import UserDetailRecipe from "./pages/user/recipes/detail";
 import PublicDetailRecipe from "./pages/recipes/detail";
 import RandomDetailRecipe from "./pages/recipes/random/detail";
 import RandomRecipe from "./pages/recipes/random/";
+import Profile from "./pages/user";
 import NotFound from "./pages/404";
+import useUser from "./hooks/useUser";
 
 function App() {
   const { user } = useAuth();
   const { getUserRecipes, getRecipe, getPublicRecipes, getUserAndRecipe } =
     useRecipe();
+  const { getUser } = useUser();
 
   const router = createBrowserRouter([
     {
@@ -38,6 +41,14 @@ function App() {
           path: "/",
           element: <Home />,
           index: true,
+        },
+        {
+          path: "/:username",
+          element: <PrivateRoute component={Profile} />,
+          loader: async ({ params }) => {
+            const user = await getUser(params.username);
+            return user;
+          },
         },
         {
           path: "/:username/recipes",

@@ -1,6 +1,11 @@
 export const RECIPE_IMAGE_URL = `${
   import.meta.env.VITE_SUPABASE_URL
 }/storage/v1/object/public/recipes`;
+
+export const AVATAR_IMAGE_URL = `${
+  import.meta.env.VITE_SUPABASE_URL
+}/storage/v1/object/public/avatars`;
+
 export const SPOONACULAR_BASE_URL = "https://api.spoonacular.com/recipes";
 
 export const MEAL_TYPES = ["breakfast", "lunch", "dinner", "snack"];
