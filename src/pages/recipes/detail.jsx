@@ -15,7 +15,7 @@ export default function PublicDetailRecipe() {
         <img
           src={`${AVATAR_IMAGE_URL}/${recipe.profiles.avatar}`}
           alt="profile"
-          className="rounded-full"
+          className="rounded-full w-10 h-10 object-cover"
         />
       );
     }
@@ -47,7 +47,7 @@ export default function PublicDetailRecipe() {
             )}
           </h1>
           <div className="flex items-center">
-            <div className="w-10 rounded-full">
+            <div className="w-10 h-10 rounded-full">
               <ProfilePicture />
             </div>
             <p className="ml-2">
