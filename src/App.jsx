@@ -77,7 +77,7 @@ function App() {
           path: "/:username/recipes/:recipeId",
           element: <PrivateRecipeRoute component={UserDetailRecipe} />,
           loader: async ({ params }) => {
-            const recipe = await getRecipe(params.recipeId);
+            const recipe = await getUserAndRecipe(params.recipeId);
             return recipe;
           },
         },
