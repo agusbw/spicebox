@@ -114,7 +114,7 @@ export default function PublicRecipes() {
                 onChange={handleSearchChange}
               />
             </div>
-            <div className="flex lg:flex-row flex-col items-center mt-4 gap-4">
+            <div className="flex lg:flex-row flex-col mt-4 gap-4">
               <div className="collapse border border-base-300 bg-base-100 rounded-box collapse-arrow w-full md:w-fit">
                 <input type="checkbox" />
                 <div className="collapse-title text-md font-medium">
@@ -137,7 +137,7 @@ export default function PublicRecipes() {
               </div>
               <Link
                 to="/recipes/random"
-                className="btn rounded-md btn-secondary self-start md:self-auto"
+                className="btn rounded-md btn-secondary self-start lg:self-auto"
               >
                 Get random recipe
               </Link>

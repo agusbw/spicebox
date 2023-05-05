@@ -25,6 +25,22 @@ export default function useRecipe() {
     }
   };
 
+  const countUserRecipes = async (user_id) => {
+    try {
+      const { count, error } = await supabase
+
+        .from("recipes")
+        .select("id", { count: "exact", head: true })
+        .eq("user_id", user_id);
+
+      if (error) throw error;
+
+      return count;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getPublicRecipes = async () => {
     try {
       const { data } = await supabase
@@ -159,5 +175,6 @@ export default function useRecipe() {
     getUserRecipesByType,
     deleteRecipeImage,
     updateRecipe,
+    countUserRecipes,
   };
 }
