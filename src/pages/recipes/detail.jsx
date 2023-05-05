@@ -191,9 +191,7 @@ export default function PublicDetailRecipe() {
           <CollapsibleList variant="primary" title="Cooking Steps">
             {recipe?.instructions.map((instruction, index) => (
               <li key={index} className="font-light text-lg">
-                <li key={index} className="font-light text-lg">
-                  <LineThroughText variant="primary" text={instruction} />
-                </li>
+                <LineThroughText variant="primary" text={instruction} />
               </li>
             ))}
           </CollapsibleList>
