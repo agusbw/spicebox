@@ -1,45 +1,16 @@
-import profileThumbnail from "../../assets/profile.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/Auth";
-import { getInitials } from "../../utils/functions";
-import { useProfile } from "../../contexts/Profile";
-import { AVATAR_IMAGE_URL } from "../../constants";
+import ProfiePicture from "../ProfilePicture";
 
 export default function Navbar() {
   const navigate = useNavigate();
-  const profile = useProfile();
   const { user, signOut } = useAuth();
 
-  console.log(profile);
   const handleSignOut = async () => {
     await signOut();
   };
   const handleSignIn = () => {
     navigate("/login");
-  };
-
-  const ProfiePicture = () => {
-    if (profile && user) {
-      if (profile.avatar) {
-        return (
-          <img src={`${AVATAR_IMAGE_URL}/${profile.avatar}`} alt="profile" />
-        );
-      }
-      return (
-        <div className="avatar placeholder">
-          <div className="bg-neutral-focus text-neutral-content rounded-full w-10">
-            <span>
-              {getInitials(
-                user?.user_metadata?.firstname,
-                user?.user_metadata?.lastname
-              )}
-            </span>
-          </div>
-        </div>
-      );
-    } else {
-      return <img src={profileThumbnail} alt="profile" />;
-    }
   };
 
   return (

@@ -2,7 +2,6 @@ import Container from "../../../components/layouts/Container";
 import { useLoaderData, useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../../contexts/Auth";
 import DetailRecipeContainer from "../../../components/layouts/DetailRecipeContainer";
-import profile from "../../../assets/profile.png";
 import thumbnail from "../../../assets/image-thumbnail.jpg";
 import { RECIPE_IMAGE_URL } from "../../../constants";
 import useRecipe from "../../../hooks/useRecipe";
@@ -10,6 +9,7 @@ import Swal from "sweetalert2";
 import LineThroughText from "../../../components/LineThroughList";
 import { getFullName } from "../../../utils/functions";
 import CollapsibleList from "../../../components/CollapsibleList";
+import ProfilePicture from "../../../components/ProfilePicture";
 
 export default function UserDetailRecipe() {
   const recipe = useLoaderData();
@@ -101,12 +101,8 @@ export default function UserDetailRecipe() {
               </DetailRecipeContainer>
               <DetailRecipeContainer className="lg:hidden">
                 <div className="flex flex-col justify-center items-center mb-4">
-                  <div className="">
-                    <img
-                      src={`${profile}`}
-                      alt="Food Image"
-                      className="object-cover btn-circle w-24 h-24"
-                    />
+                  <div className="w-16 rounded-full">
+                    <ProfilePicture />
                   </div>
                   <div className="text-center">
                     <p className="font-oswald text-lg">
@@ -147,9 +143,7 @@ export default function UserDetailRecipe() {
               <CollapsibleList variant="primary" title="Cooking Steps">
                 {recipe?.instructions.map((instruction, index) => (
                   <li key={index} className="font-light text-lg">
-                    <li key={index} className="font-light text-lg">
-                      <LineThroughText variant="primary" text={instruction} />
-                    </li>
+                    <LineThroughText variant="primary" text={instruction} />
                   </li>
                 ))}
               </CollapsibleList>
@@ -158,12 +152,8 @@ export default function UserDetailRecipe() {
               className={"hidden lg:block sticky top-24 w-4/12 h-fit"}
             >
               <div className="flex flex-col justify-center items-center">
-                <div className="">
-                  <img
-                    src={`${profile}`}
-                    alt="Food Image"
-                    className="object-cover btn-circle w-24 h-24"
-                  />
+                <div className="w-16 h-16 rounded-full">
+                  <ProfilePicture />
                 </div>
                 <div className="text-center">
                   <p className="font-oswald text-lg">
