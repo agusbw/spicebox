@@ -8,9 +8,6 @@ const ProfiePicture = () => {
   const [profile] = useProfile();
   const { user } = useAuth();
 
-  console.log("Profile", profile);
-  console.log("User", user);
-
   return (
     <>
       {!user && (
