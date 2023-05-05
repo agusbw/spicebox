@@ -47,7 +47,8 @@ function App() {
           element: <PrivateRoute component={Profile} />,
           loader: async ({ params }) => {
             const user = await getUser(params.username);
-            return user;
+            if (user) return user;
+            return null;
           },
         },
         {
