@@ -137,7 +137,7 @@ export default function PublicRecipes() {
               </div>
               <Link
                 to="/recipes/random"
-                className="btn rounded-md btn-secondary self-start md:self-auto"
+                className="btn rounded-md btn-secondary self-start lg:self-auto"
               >
                 Get random recipe
               </Link>
