@@ -22,10 +22,10 @@ export function ProfileProvider({ children }) {
     if (user) {
       getUserProfile(user.user_metadata.username);
     }
-  }, [user, profile]);
+  }, [user]);
 
   return (
-    <ProfileContext.Provider value={profile}>
+    <ProfileContext.Provider value={[profile, setProfile]}>
       {children}
     </ProfileContext.Provider>
   );
