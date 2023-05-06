@@ -8,7 +8,7 @@ export default function LineThroughText({ text, variant }) {
         type="checkbox"
         defaultChecked={checked}
         className={`checkbox mr-2 text-white ${
-          variant && "checkbox-" + variant
+          variant === "secondary" ? "checkbox-secondary" : "checkbox-primary"
         } w-4 h-4`}
         onChange={() => setChecked(!checked)}
       />
