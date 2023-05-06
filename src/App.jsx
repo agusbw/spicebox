@@ -77,7 +77,8 @@ function App() {
           element: <PrivateRecipeRoute component={UpdateRecipe} />,
           loader: async ({ params }) => {
             const recipe = await getRecipe(params.recipeId);
-            return recipe;
+            if (recipe) return recipe;
+            return null;
           },
         },
         {
@@ -85,7 +86,8 @@ function App() {
           element: <PrivateRecipeRoute component={UserDetailRecipe} />,
           loader: async ({ params }) => {
             const recipe = await getUserAndRecipe(params.recipeId);
-            return recipe;
+            if (recipe) return recipe;
+            return null;
           },
         },
         {
@@ -122,7 +124,8 @@ function App() {
           element: <PrivateRoute component={PublicDetailRecipe} />,
           loader: async ({ params }) => {
             const recipe = await getUserAndRecipe(params.recipeId);
-            return recipe;
+            if (recipe) return recipe;
+            return null;
           },
         },
       ],
