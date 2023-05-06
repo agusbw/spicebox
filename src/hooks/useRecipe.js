@@ -16,6 +16,21 @@ export default function useRecipe() {
     }
   };
 
+  const getUserPublicRecipes = async (user_id) => {
+    try {
+      const { data } = await supabase
+        .from("recipes")
+        .select("*")
+        .eq("user_id", user_id)
+        .eq("is_public", true)
+        .order("created_at", { ascending: false });
+
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getAllRecipes = async () => {
     try {
       const { data } = await supabase.from("recipes").select("*");
@@ -176,5 +191,6 @@ export default function useRecipe() {
     deleteRecipeImage,
     updateRecipe,
     countUserRecipes,
+    getUserPublicRecipes,
   };
 }

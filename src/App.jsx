@@ -22,14 +22,20 @@ import UserDetailRecipe from "./pages/user/recipes/detail";
 import PublicDetailRecipe from "./pages/recipes/detail";
 import RandomDetailRecipe from "./pages/recipes/random/detail";
 import RandomRecipe from "./pages/recipes/random/";
+import RecipesByUser from "./pages/recipes/users";
 import Profile from "./pages/user";
 import NotFound from "./pages/404";
 import useUser from "./hooks/useUser";
 
 function App() {
   const { user } = useAuth();
-  const { getUserRecipes, getRecipe, getPublicRecipes, getUserAndRecipe } =
-    useRecipe();
+  const {
+    getUserRecipes,
+    getRecipe,
+    getPublicRecipes,
+    getUserAndRecipe,
+    getUserPublicRecipes,
+  } = useRecipe();
   const { getUser } = useUser();
 
   const router = createBrowserRouter([
@@ -97,6 +103,19 @@ function App() {
         {
           path: "/recipes/random/:recipeId",
           element: <PrivateRoute component={RandomDetailRecipe} />,
+        },
+        {
+          path: "/recipes/users/:username",
+          element: <PrivateRoute component={RecipesByUser} />,
+          loader: async ({ params }) => {
+            const user = await getUser(params.username);
+            if (user) {
+              const recipes = await getUserPublicRecipes(user.id);
+              if (recipes) return recipes;
+              return [];
+            }
+            return null;
+          },
         },
         {
           path: "/recipes/:recipeId",
