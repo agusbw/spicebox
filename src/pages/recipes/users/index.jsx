@@ -3,7 +3,7 @@ import { useLoaderData, Navigate, useParams } from "react-router-dom";
 import PublicRecipeCard from "../../../components/PublicRecipeCard";
 import PaginationButton from "../../../components/PaginationButton";
 import React from "react";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const RECIPE_PER_PAGE = 8;
 

@@ -1,19 +1,19 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, Navigate } from "react-router-dom";
 import thumbnail from "../../../assets/image-thumbnail.jpg";
 import Container from "../../../components/layouts/Container";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import CollapsibleList from "../../../components/CollapsibleList";
 import LineThroughText from "../../../components/LineThroughList";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
-export default function PublicDetailRecipe() {
+export default function RandomDetailRecipe() {
   const location = useLocation();
   const recipe = location.state;
   return (
     <>
-      {!recipe ? (
-        <Link to="/not-found" />
+      {recipe === null ? (
+        <Navigate to="/not-found" />
       ) : (
         <>
           <Helmet>

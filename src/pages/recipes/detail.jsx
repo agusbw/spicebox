@@ -5,7 +5,7 @@ import Container from "../../components/layouts/Container";
 import { getInitials, joinWords, getFullName } from "../../utils/functions";
 import LineThroughText from "../../components/LineThroughList";
 import CollapsibleList from "../../components/CollapsibleList";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 export default function PublicDetailRecipe() {
   const recipe = useLoaderData();

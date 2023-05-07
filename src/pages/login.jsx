@@ -5,7 +5,7 @@ import { TextInput } from "../components/FormComponents";
 import { useState } from "react";
 import { useAuth } from "../contexts/Auth";
 import loginImage from "../assets/login.webp";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 export default function Login() {
   const {

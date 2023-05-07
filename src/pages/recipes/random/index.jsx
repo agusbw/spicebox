@@ -11,7 +11,7 @@ import {
 import { forwardRef } from "react";
 import Container from "../../../components/layouts/Container";
 import { MEAL_TYPES, DIETS, CUISINES } from "../../../constants";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const Select = forwardRef(function Select(
   { className, children, ...rest },

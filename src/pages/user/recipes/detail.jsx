@@ -10,7 +10,7 @@ import LineThroughText from "../../../components/LineThroughList";
 import { getFullName } from "../../../utils/functions";
 import CollapsibleList from "../../../components/CollapsibleList";
 import ProfilePicture from "../../../components/ProfilePicture";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 export default function UserDetailRecipe() {
   const recipe = useLoaderData();

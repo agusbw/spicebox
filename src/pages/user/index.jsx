@@ -9,7 +9,7 @@ import { useLoaderData, useNavigate } from "react-router-dom";
 import useUser from "../../hooks/useUser";
 import Swal from "sweetalert2";
 import { useProfile } from "../../contexts/Profile";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 export default function Profile() {
   const { user } = useAuth();

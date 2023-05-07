@@ -11,7 +11,7 @@ import { useAuth } from "../../../contexts/Auth";
 import { TextInput, Select } from "../../../components/FormComponents";
 import RecipeCard from "../../../components/RecipeCard";
 import PaginationButton from "../../../components/PaginationButton";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const RECIPE_PER_PAGE = 8;
 

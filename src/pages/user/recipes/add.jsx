@@ -9,7 +9,7 @@ import { useAuth } from "../../../contexts/Auth";
 import { TextInput, Select } from "../../../components/FormComponents";
 import Container from "../../../components/layouts/Container";
 import React from "react";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 export default function AddUserRecipe() {
   const {

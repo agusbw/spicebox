@@ -1,7 +1,7 @@
 import heroImage from "../assets/hero.png";
 import herobg from "../assets/herobg.jpg";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 export default function Home() {
   return (

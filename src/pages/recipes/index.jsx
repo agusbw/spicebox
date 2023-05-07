@@ -6,7 +6,7 @@ import { TextInput, Select } from "../../components/FormComponents";
 import PublicRecipeCard from "../../components/PublicRecipeCard";
 import PaginationButton from "../../components/PaginationButton";
 import Breadcrumbs from "../../components/Breadcrumbs";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const RECIPE_PER_PAGE = 8;
 

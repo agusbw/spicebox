@@ -6,7 +6,7 @@ import { TextInput } from "../components/FormComponents";
 import loginImage from "../assets/login.webp";
 import { useState } from "react";
 import useUser from "../hooks/useUser";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 export default function Register() {
   const { signUp } = useAuth();
