@@ -40,6 +40,10 @@ function App() {
 
   const router = createBrowserRouter([
     {
+      path: "/not-found",
+      element: <NotFound />,
+    },
+    {
       path: "/",
       element: <RootLayout />,
       children: [
@@ -53,8 +57,7 @@ function App() {
           element: <PrivateRoute component={Profile} />,
           loader: async ({ params }) => {
             const user = await getUser(params.username);
-            if (user) return user;
-            return null;
+            return user ? user : null;
           },
         },
         {
@@ -77,8 +80,7 @@ function App() {
           element: <PrivateRecipeRoute component={UpdateRecipe} />,
           loader: async ({ params }) => {
             const recipe = await getRecipe(params.recipeId);
-            if (recipe) return recipe;
-            return null;
+            return recipe ? recipe : null;
           },
         },
         {
@@ -86,8 +88,7 @@ function App() {
           element: <PrivateRecipeRoute component={UserDetailRecipe} />,
           loader: async ({ params }) => {
             const recipe = await getUserAndRecipe(params.recipeId);
-            if (recipe) return recipe;
-            return null;
+            return recipe ? recipe : null;
           },
         },
         {
@@ -95,7 +96,7 @@ function App() {
           element: <PrivateRoute component={PublicRecipes} />,
           loader: async () => {
             const recipes = await getPublicRecipes();
-            return recipes;
+            return recipes && recipes.length > 0 ? recipes : [];
           },
         },
         {
@@ -113,8 +114,7 @@ function App() {
             const user = await getUser(params.username);
             if (user) {
               const recipes = await getUserPublicRecipes(user.id);
-              if (recipes) return recipes;
-              return [];
+              return recipes && recipes.length > 0 ? recipes : [];
             }
             return null;
           },
@@ -124,8 +124,7 @@ function App() {
           element: <PrivateRoute component={PublicDetailRecipe} />,
           loader: async ({ params }) => {
             const recipe = await getUserAndRecipe(params.recipeId);
-            if (recipe) return recipe;
-            return null;
+            return recipe ? recipe : null;
           },
         },
       ],
