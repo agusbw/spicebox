@@ -34,7 +34,7 @@ export default function RecipesByUser() {
   return (
     <>
       {recipes === null ? (
-        <Navigate to="/" replace={true} state={{ notFound: true }} />
+        <Navigate to="/not-found" replace={true} state={{ notFound: true }} />
       ) : (
         <Container>
           <h1 className="text-4xl font-bold mb-3">
