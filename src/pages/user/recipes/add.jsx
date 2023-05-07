@@ -9,6 +9,7 @@ import { useAuth } from "../../../contexts/Auth";
 import { TextInput, Select } from "../../../components/FormComponents";
 import Container from "../../../components/layouts/Container";
 import React from "react";
+import { Helmet } from "react-helmet-async";
 
 export default function AddUserRecipe() {
   const {
@@ -81,6 +82,9 @@ export default function AddUserRecipe() {
       {username !== user.user_metadata.username && (
         <Navigate to={`/${user.user_metadata.usernamee}/recipes`} replace />
       )}
+      <Helmet>
+        <title>Add Recipe | SpiceBox</title>
+      </Helmet>
       <Container>
         <h1 className="text-4xl font-bold mb-3">Add Recipe📖</h1>
         <p className="text-2xl">Add your own recipe here ❤ !</p>

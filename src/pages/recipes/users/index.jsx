@@ -3,6 +3,7 @@ import { useLoaderData, Navigate, useParams } from "react-router-dom";
 import PublicRecipeCard from "../../../components/PublicRecipeCard";
 import PaginationButton from "../../../components/PaginationButton";
 import React from "react";
+import { Helmet } from "react-helmet-async";
 
 const RECIPE_PER_PAGE = 8;
 
@@ -36,34 +37,41 @@ export default function RecipesByUser() {
       {recipes === null ? (
         <Navigate to="/not-found" replace={true} state={{ notFound: true }} />
       ) : (
-        <Container>
-          <h1 className="text-4xl font-bold mb-3">
-            Recipes By <span className="text-secondary">{username}</span> 📕
-          </h1>
-          {recipes.length === 0 ? (
-            <p className="text-lg">No recipes found</p>
-          ) : (
-            <>
-              <p className="text-lg ">
-                Found{" "}
-                <span className="font-bold text-primary">{recipes.length}</span>{" "}
-                recipes
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3 mt-5">
-                {filteredRecipes &&
-                  filteredRecipes.map((recipe) => (
-                    <PublicRecipeCard key={recipe.id} recipe={recipe} />
-                  ))}
-              </div>
-              <PaginationButton
-                className="w-full flex justify-center mt-12 mb-10"
-                totalPages={totalPages}
-                currentPage={currentPage}
-                handlePageChange={handlePageChange}
-              />
-            </>
-          )}
-        </Container>
+        <>
+          <Helmet>
+            <title>Recipes By {username} | SpiceBox</title>
+          </Helmet>
+          <Container>
+            <h1 className="text-4xl font-bold mb-3">
+              Recipes By <span className="text-secondary">{username}</span> 📕
+            </h1>
+            {recipes.length === 0 ? (
+              <p className="text-lg">No recipes found</p>
+            ) : (
+              <>
+                <p className="text-lg ">
+                  Found{" "}
+                  <span className="font-bold text-primary">
+                    {recipes.length}
+                  </span>{" "}
+                  recipes
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3 mt-5">
+                  {filteredRecipes &&
+                    filteredRecipes.map((recipe) => (
+                      <PublicRecipeCard key={recipe.id} recipe={recipe} />
+                    ))}
+                </div>
+                <PaginationButton
+                  className="w-full flex justify-center mt-12 mb-10"
+                  totalPages={totalPages}
+                  currentPage={currentPage}
+                  handlePageChange={handlePageChange}
+                />
+              </>
+            )}
+          </Container>
+        </>
       )}
     </>
   );
