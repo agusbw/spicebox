@@ -1,10 +1,14 @@
 import heroImage from "../assets/hero.png";
 import herobg from "../assets/herobg.jpg";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 export default function Home() {
   return (
     <>
+      <Helmet>
+        <title>Home | SpiceBox</title>
+      </Helmet>
       <div className="hero h-screen bg-hero">
         <img
           src={herobg}

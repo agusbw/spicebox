@@ -11,6 +11,7 @@ import {
 import { forwardRef } from "react";
 import Container from "../../../components/layouts/Container";
 import { MEAL_TYPES, DIETS, CUISINES } from "../../../constants";
+import { Helmet } from "react-helmet";
 
 const Select = forwardRef(function Select(
   { className, children, ...rest },
@@ -104,68 +105,73 @@ export default function RandomRecipe() {
   };
 
   return (
-    <Container>
-      <div className="flex flex-col justify-center items-center gap-2 mt-3">
-        <h1 className="text-5xl font-bold text-center font-oswald text-primary">
-          Get Random Recipe
-        </h1>
-        <p className="text-2xl font-semibold text-secondary text-center">
-          Confused about what to cook today?
-        </p>
-        <p className="text-center">
-          Get random recipe based on your meal type, diet and cuisine.
-        </p>
-        <div className="flex flex-wrap gap-3 mb-4 justify-center">
-          <div>
-            <label className="label text-base label-text font-semibold">
-              <span className="label-text">Meal type</span>
-            </label>
-            <Select ref={mealRef}>
-              <option value="">All</option>
-              {MEAL_TYPES.map((meal, index) => (
-                <option key={index} value={meal}>
-                  {capitalizeFristLetter(meal)}
-                </option>
-              ))}
-            </Select>
+    <>
+      <Helmet>
+        <title>Random Recipe | SpiceBox</title>
+      </Helmet>
+      <Container>
+        <div className="flex flex-col justify-center items-center gap-2 mt-3">
+          <h1 className="text-5xl font-bold text-center font-oswald text-primary">
+            Get Random Recipe
+          </h1>
+          <p className="text-2xl font-semibold text-secondary text-center">
+            Confused about what to cook today?
+          </p>
+          <p className="text-center">
+            Get random recipe based on your meal type, diet and cuisine.
+          </p>
+          <div className="flex flex-wrap gap-3 mb-4 justify-center">
+            <div>
+              <label className="label text-base label-text font-semibold">
+                <span className="label-text">Meal type</span>
+              </label>
+              <Select ref={mealRef}>
+                <option value="">All</option>
+                {MEAL_TYPES.map((meal, index) => (
+                  <option key={index} value={meal}>
+                    {capitalizeFristLetter(meal)}
+                  </option>
+                ))}
+              </Select>
+            </div>
+            <div>
+              <label className="label text-base label-text font-semibold">
+                <span className="label-text">Diet</span>
+              </label>
+              <Select ref={dietRef}>
+                <option value="">All</option>
+                {DIETS.map((diet, index) => (
+                  <option key={index} value={`${diet}`}>
+                    {capitalizeFristLetter(diet)}
+                  </option>
+                ))}
+              </Select>
+            </div>
+            <div>
+              <label className="label text-base label-text font-semibold">
+                <span className="label-text">Cuisine</span>
+              </label>
+              <Select ref={cuisineRef}>
+                <option value="">All</option>
+                {CUISINES.map((cuisine, index) => (
+                  <option key={index} value={cuisine}>
+                    {capitalizeFristLetter(cuisine)}
+                  </option>
+                ))}
+              </Select>
+            </div>
           </div>
-          <div>
-            <label className="label text-base label-text font-semibold">
-              <span className="label-text">Diet</span>
-            </label>
-            <Select ref={dietRef}>
-              <option value="">All</option>
-              {DIETS.map((diet, index) => (
-                <option key={index} value={`${diet}`}>
-                  {capitalizeFristLetter(diet)}
-                </option>
-              ))}
-            </Select>
-          </div>
-          <div>
-            <label className="label text-base label-text font-semibold">
-              <span className="label-text">Cuisine</span>
-            </label>
-            <Select ref={cuisineRef}>
-              <option value="">All</option>
-              {CUISINES.map((cuisine, index) => (
-                <option key={index} value={cuisine}>
-                  {capitalizeFristLetter(cuisine)}
-                </option>
-              ))}
-            </Select>
-          </div>
+          <button
+            className="btn btn-secondary w-fit btn-circle px-4 mb-4"
+            onClick={handleClick}
+          >
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+            Get Recipe
+          </button>
+          {isLoading && <Loading />}
+          {recipe !== undefined && !isLoading ? <Card recipe={recipe} /> : null}
         </div>
-        <button
-          className="btn btn-secondary w-fit btn-circle px-4 mb-4"
-          onClick={handleClick}
-        >
-          <FontAwesomeIcon icon={faMagnifyingGlass} />
-          Get Recipe
-        </button>
-        {isLoading && <Loading />}
-        {recipe !== undefined && !isLoading ? <Card recipe={recipe} /> : null}
-      </div>
-    </Container>
+      </Container>
+    </>
   );
 }

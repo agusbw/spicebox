@@ -11,6 +11,7 @@ import { useAuth } from "../../../contexts/Auth";
 import { TextInput, Select } from "../../../components/FormComponents";
 import RecipeCard from "../../../components/RecipeCard";
 import PaginationButton from "../../../components/PaginationButton";
+import { Helmet } from "react-helmet";
 
 const RECIPE_PER_PAGE = 8;
 
@@ -94,7 +95,9 @@ export default function UserRecipes() {
       {username !== user.user_metadata.username && (
         <Navigate to={`/${user.user_metadata.username}/recipes`} replace />
       )}
-
+      <Helmet>
+        <title>My Recipes | SpiceBox</title>
+      </Helmet>
       <Container>
         <h1 className="text-5xl font-bold mb-3">My Recipes🍲</h1>
         <p className="text-2xl">
