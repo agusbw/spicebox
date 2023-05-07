@@ -63,6 +63,7 @@ const Card = ({ recipe }) => {
               <Link
                 className="btn btn-primary btn-sm"
                 to={`/recipes/random/${recipe.id}`}
+                state={recipe}
               >
                 Detail Recipe
               </Link>

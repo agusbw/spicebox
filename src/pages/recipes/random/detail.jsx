@@ -1,27 +1,14 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import thumbnail from "../../../assets/image-thumbnail.jpg";
 import Container from "../../../components/layouts/Container";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import useFetch from "../../../hooks/useFetch";
 import CollapsibleList from "../../../components/CollapsibleList";
-import React from "react";
 import LineThroughText from "../../../components/LineThroughList";
 
 export default function PublicDetailRecipe() {
-  const { recipeId } = useParams();
-  const [recipe, setRecipe] = React.useState();
-  const { getDetailRecipe } = useFetch();
-
-  const fetchData = async () => {
-    const data = await getDetailRecipe(recipeId);
-    setRecipe(data);
-  };
-
-  React.useEffect(() => {
-    fetchData();
-  }, [recipeId]);
-
+  const location = useLocation();
+  const recipe = location.state;
   return (
     <Container className="min-h-screen mx-auto">
       <div className="md:max-w-5xl mx-auto">
