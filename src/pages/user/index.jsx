@@ -33,11 +33,11 @@ export default function Profile() {
 
   useEffect(() => {
     if (!profile) {
-      navigate("/", { replace: true });
+      navigate("/not-found", { replace: true });
       return;
     }
     if (user.id !== profile.id) {
-      navigate("/", { replace: true });
+      navigate("/not-found", { replace: true });
       return;
     }
     getCountRecipes();

@@ -35,7 +35,7 @@ export default function PublicDetailRecipe() {
   return (
     <>
       {recipe === null ? (
-        <Navigate to="/" />
+        <Navigate to="/not-found" />
       ) : (
         <Container className="min-h-screen mx-auto">
           <div className="md:max-w-5xl mx-auto">
