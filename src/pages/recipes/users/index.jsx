@@ -17,9 +17,9 @@ export default function RecipesByUser() {
 
   let filteredRecipes = recipes;
 
-  const totalPages = Math.ceil(filteredRecipes.length / RECIPE_PER_PAGE);
+  const totalPages = Math.ceil(filteredRecipes?.length / RECIPE_PER_PAGE);
 
-  filteredRecipes = filteredRecipes.slice(
+  filteredRecipes = filteredRecipes?.slice(
     (currentPage - 1) * RECIPE_PER_PAGE,
     currentPage * RECIPE_PER_PAGE
   );
