@@ -29,24 +29,7 @@ const useFetch = () => {
     }
   };
 
-  const getDetailRecipe = async (id) => {
-    setIsLoading(true);
-    try {
-      const response = await axios.get(
-        `${SPOONACULAR_BASE_URL}/${id}/information?includeNutrition-false`,
-        {
-          headers: headers,
-        }
-      );
-      return response.data;
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  return { getRandomRecipe, isLoading, getDetailRecipe };
+  return { getRandomRecipe, isLoading };
 };
 
 export default useFetch;
