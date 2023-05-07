@@ -17,9 +17,9 @@ export default function RecipesByUser() {
 
   let filteredRecipes = recipes;
 
-  const totalPages = Math.ceil(filteredRecipes.length / RECIPE_PER_PAGE);
+  const totalPages = Math.ceil(filteredRecipes?.length / RECIPE_PER_PAGE);
 
-  filteredRecipes = filteredRecipes.slice(
+  filteredRecipes = filteredRecipes?.slice(
     (currentPage - 1) * RECIPE_PER_PAGE,
     currentPage * RECIPE_PER_PAGE
   );
@@ -34,7 +34,7 @@ export default function RecipesByUser() {
   return (
     <>
       {recipes === null ? (
-        <Navigate to="/" replace={true} state={{ notFound: true }} />
+        <Navigate to="/not-found" replace={true} state={{ notFound: true }} />
       ) : (
         <Container>
           <h1 className="text-4xl font-bold mb-3">

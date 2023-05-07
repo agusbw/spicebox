@@ -88,7 +88,7 @@ export default function UpdateRecipe() {
   return (
     <>
       {recipe === null ? (
-        <Navigate to="/" replace={true} state={{ notFound: true }} />
+        <Navigate to="/notfound" replace={true} state={{ notFound: true }} />
       ) : (
         <Container>
           <h1 className="text-4xl font-bold mb-3">Update Recipe📖</h1>

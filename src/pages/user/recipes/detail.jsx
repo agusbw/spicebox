@@ -39,7 +39,7 @@ export default function UserDetailRecipe() {
   return (
     <>
       {recipe === null ? (
-        <Navigate to="/" replace={true} state={{ notFound: true }} />
+        <Navigate to="/not-found" replace={true} state={{ notFound: true }} />
       ) : (
         <Container className="min-h-screen mx-auto">
           <div className="md:max-w-5xl mx-auto">
