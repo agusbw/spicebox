@@ -93,7 +93,7 @@ function App() {
         },
         {
           path: "/recipes",
-          element: <PrivateRoute component={PublicRecipes} />,
+          element: <PublicRecipes />,
           loader: async () => {
             const recipes = await getPublicRecipes();
             return recipes && recipes.length > 0 ? recipes : [];
@@ -109,7 +109,7 @@ function App() {
         },
         {
           path: "/recipes/users/:username",
-          element: <PrivateRoute component={RecipesByUser} />,
+          element: <RecipesByUser />,
           loader: async ({ params }) => {
             const user = await getUser(params.username);
             if (user) {
@@ -121,7 +121,7 @@ function App() {
         },
         {
           path: "/recipes/:recipeId",
-          element: <PrivateRoute component={PublicDetailRecipe} />,
+          element: <PublicDetailRecipe />,
           loader: async ({ params }) => {
             const recipe = await getUserAndRecipe(params.recipeId);
             return recipe ? recipe : null;
