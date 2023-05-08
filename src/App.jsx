@@ -6,6 +6,7 @@ import {
 
 import { useAuth } from "./contexts/Auth";
 import useRecipe from "./hooks/useRecipe";
+import useBookmark from "./hooks/useBookmark";
 
 import RootLayout from "./components/layouts/RootLayout";
 import PrivateRoute from "./components/hoc/PrivateRoute";
@@ -22,6 +23,7 @@ import UserDetailRecipe from "./pages/user/recipes/detail";
 import PublicDetailRecipe from "./pages/recipes/detail";
 import RandomDetailRecipe from "./pages/recipes/random/detail";
 import RandomRecipe from "./pages/recipes/random/";
+import Bookmark from "./pages/user/bookmark";
 import RecipesByUser from "./pages/recipes/users";
 import Profile from "./pages/user";
 import NotFound from "./pages/404";
@@ -37,6 +39,7 @@ function App() {
     getUserPublicRecipes,
   } = useRecipe();
   const { getUser } = useUser();
+  const { getUserBookmarks } = useBookmark();
 
   const router = createBrowserRouter([
     {
@@ -66,9 +69,21 @@ function App() {
           loader: async () => {
             if (user) {
               const recipes = await getUserRecipes(user.id);
-              return recipes;
+              return recipes && recipes.length > 0 ? recipes : [];
             }
-            return [];
+            return null;
+          },
+        },
+        {
+          path: "/:username/bookmarks",
+          element: <PrivateRoute component={Bookmark} />,
+          loader: async () => {
+            if (user) {
+              const bookmarks = await getUserBookmarks(user.id);
+              const recipes = bookmarks.map((bookmark) => bookmark.recipe);
+              return recipes && recipes.length > 0 ? recipes : [];
+            }
+            return null;
           },
         },
         {
