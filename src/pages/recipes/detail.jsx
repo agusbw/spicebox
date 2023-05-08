@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLoaderData, Navigate } from "react-router-dom";
+import { Link, useLoaderData, Navigate, useNavigate } from "react-router-dom";
 import thumbnail from "../../assets/image-thumbnail.jpg";
 import { RECIPE_IMAGE_URL, AVATAR_IMAGE_URL } from "../../constants";
 import Container from "../../components/layouts/Container";
@@ -18,6 +18,7 @@ export default function PublicDetailRecipe() {
   const [isBookmarked, setIsBookmarked] = React.useState(false);
   const { addBookmark, removeBookmark, checkBookmark } = useBookmark();
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   const ProfilePicture = () => {
     if (recipe.profiles.avatar) {
@@ -46,10 +47,15 @@ export default function PublicDetailRecipe() {
   };
 
   React.useEffect(() => {
+    if (!user) return;
     checkIsBookmarked();
   }, []);
 
   const handleBookmarkClick = async () => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
     if (isBookmarked) {
       await removeBookmark(recipe.id, user.id);
       setIsBookmarked(false);
@@ -104,7 +110,7 @@ export default function PublicDetailRecipe() {
                       </Link>
                     </p>
                   </div>
-                  {user.id === recipe.profiles.id ? (
+                  {user && user.id === recipe.profiles.id ? (
                     <Link
                       className="btn btn-sm w-fit btn-secondary rounded-md"
                       to={`/${recipe.profiles.username}/recipes/${recipe.id}`}
