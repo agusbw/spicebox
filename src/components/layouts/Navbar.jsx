@@ -82,6 +82,11 @@ export default function Navbar() {
               </Link>
             </li>
             <li>
+              <Link to={`/${user?.user_metadata.username}/bookmarks`}>
+                Bookmark
+              </Link>
+            </li>
+            <li>
               <span onClick={user ? handleSignOut : handleSignIn}>
                 {user ? "Logout" : "Login"}
               </span>

@@ -9,6 +9,7 @@ import { useLoaderData, useNavigate } from "react-router-dom";
 import useUser from "../../hooks/useUser";
 import Swal from "sweetalert2";
 import { useProfile } from "../../contexts/Profile";
+import useBookmark from "../../hooks/useBookmark";
 import { Helmet } from "react-helmet-async";
 
 export default function Profile() {
@@ -17,6 +18,8 @@ export default function Profile() {
   const [, setProfile] = useProfile();
   const { countUserRecipes } = useRecipe();
   const [totalRecipe, setTotalRecipe] = useState(0);
+  const [totalBookmark, setTotalBookmark] = useState(0);
+  const { getUserBookmarks } = useBookmark();
   const imageRef = useRef(null);
   const [imagePreview, setImagePreview] = useState(() => {
     if (profile && profile.avatar) {
@@ -32,6 +35,11 @@ export default function Profile() {
     setTotalRecipe(count);
   };
 
+  const getCountBookmarks = async () => {
+    const data = await getUserBookmarks(user.id);
+    setTotalBookmark(data.length);
+  };
+
   useEffect(() => {
     if (!profile) {
       navigate("/not-found", { replace: true });
@@ -42,6 +50,7 @@ export default function Profile() {
       return;
     }
     getCountRecipes();
+    getCountBookmarks();
   }, []);
 
   const handleProfileChange = async (e) => {
@@ -130,7 +139,7 @@ export default function Profile() {
                   </svg>
                 </div>
                 <div className="stat-title">Total Bookmark</div>
-                <div className="stat-value text-primary">-</div>
+                <div className="stat-value text-primary">{totalBookmark}</div>
                 <div className="stat-desc">Bookmarked Recipe(s)</div>
               </div>
               <div className="stat">

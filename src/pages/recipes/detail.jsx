@@ -1,16 +1,23 @@
+import React from "react";
 import { Link, useLoaderData, Navigate } from "react-router-dom";
 import thumbnail from "../../assets/image-thumbnail.jpg";
 import { RECIPE_IMAGE_URL, AVATAR_IMAGE_URL } from "../../constants";
 import Container from "../../components/layouts/Container";
 import { getInitials, joinWords, getFullName } from "../../utils/functions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBookmark } from "@fortawesome/free-regular-svg-icons";
+import { faBookmark as faSolidBookmark } from "@fortawesome/free-solid-svg-icons";
 import LineThroughText from "../../components/LineThroughList";
 import CollapsibleList from "../../components/CollapsibleList";
 import { Helmet } from "react-helmet-async";
+import useBookmark from "../../hooks/useBookmark";
+import { useAuth } from "../../contexts/Auth";
 
 export default function PublicDetailRecipe() {
   const recipe = useLoaderData();
-
-  console.log(recipe);
+  const [isBookmarked, setIsBookmarked] = React.useState(false);
+  const { addBookmark, removeBookmark, checkBookmark } = useBookmark();
+  const { user } = useAuth();
 
   const ProfilePicture = () => {
     if (recipe.profiles.avatar) {
@@ -31,6 +38,25 @@ export default function PublicDetailRecipe() {
         </div>
       </div>
     );
+  };
+
+  const checkIsBookmarked = async () => {
+    const data = await checkBookmark(recipe.id, user.id);
+    if (data) setIsBookmarked(true);
+  };
+
+  React.useEffect(() => {
+    checkIsBookmarked();
+  }, []);
+
+  const handleBookmarkClick = async () => {
+    if (isBookmarked) {
+      await removeBookmark(recipe.id, user.id);
+      setIsBookmarked(false);
+      return;
+    }
+    await addBookmark(recipe.id, user.id);
+    setIsBookmarked(true);
   };
 
   return (
@@ -57,25 +83,48 @@ export default function PublicDetailRecipe() {
                     </span>
                   )}
                 </h1>
-                <div className="flex items-center">
-                  <div className="w-10 h-10 rounded-full">
-                    <ProfilePicture />
-                  </div>
-                  <p className="ml-2">
-                    By{" "}
-                    {getFullName(
-                      recipe.profiles.firstname,
-                      recipe.profiles.lastname
-                    )}
-                    /
-                    <Link
-                      className="link link-primary
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-center">
+                    <div className="w-10 h-10 rounded-full">
+                      <ProfilePicture />
+                    </div>
+                    <p className="ml-2">
+                      By{" "}
+                      {getFullName(
+                        recipe.profiles.firstname,
+                        recipe.profiles.lastname
+                      )}
+                      /
+                      <Link
+                        className="link link-primary
             "
-                      to={`/recipes/users/${recipe.profiles.username}`}
+                        to={`/recipes/users/${recipe.profiles.username}`}
+                      >
+                        @{recipe.profiles.username}
+                      </Link>
+                    </p>
+                  </div>
+                  {user.id === recipe.profiles.id ? (
+                    <Link
+                      className="btn btn-sm w-fit btn-secondary rounded-md"
+                      to={`/${recipe.profiles.username}/recipes/${recipe.id}`}
                     >
-                      @{recipe.profiles.username}
+                      Your Recipe
                     </Link>
-                  </p>
+                  ) : (
+                    <button
+                      className="w-fit btn btn-sm btn-secondary rounded-md"
+                      onClick={handleBookmarkClick}
+                    >
+                      <FontAwesomeIcon
+                        icon={isBookmarked ? faSolidBookmark : faBookmark}
+                        className="me-2"
+                      />
+                      <span className="mt-1">
+                        {isBookmarked ? "Saved" : "Bookmark"}
+                      </span>
+                    </button>
+                  )}
                 </div>
                 <div className="divider"></div>
                 <p className="text-lg text-justify font-light mb-3">
