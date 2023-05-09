@@ -248,7 +248,7 @@ export default function AddUserRecipe() {
                 >
                   <option value="">Difficulty</option>
                   <option value="Easy">Easy</option>
-                  <option value="Medioum">Medium</option>
+                  <option value="Medium">Medium</option>
                   <option value="Hard">Hard</option>
                 </Select>
                 {
