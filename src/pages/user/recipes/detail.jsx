@@ -94,12 +94,12 @@ export default function UserDetailRecipe() {
                     </p>
                     <p>
                       {recipe.serving_time
-                        ? `Cooking time: ${recipe.serving_time} minutes`
+                        ? `Cooking time: ${recipe.serving_time} minute(s)`
                         : ""}
                     </p>
                     <p>
                       {recipe.portion
-                        ? `Portion: ${recipe.portion} person`
+                        ? `Portion: ${recipe.portion} person(s)`
                         : ""}
                     </p>
                     <p>

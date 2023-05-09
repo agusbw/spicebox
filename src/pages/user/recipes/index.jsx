@@ -107,7 +107,7 @@ export default function UserRecipes() {
         <div className="flex my-4 gap-1 flex-wrap">
           <div className="flex">
             <Link
-              className="btn btn-primary w-36"
+              className="btn btn-primary w-36 me-3"
               to={`/${user.user_metadata.username}/recipes/add`}
             >
               Add Recipe
