@@ -13,33 +13,33 @@ import { Helmet } from "react-helmet-async";
 import useBookmark from "../../hooks/useBookmark";
 import { useAuth } from "../../contexts/Auth";
 
+const ProfilePicture = ({ recipe }) => {
+  if (recipe.profiles.avatar) {
+    return (
+      <img
+        src={`${AVATAR_IMAGE_URL}/${recipe.profiles.avatar}`}
+        alt="profile"
+        className="rounded-full w-10 h-10 object-cover"
+      />
+    );
+  }
+  return (
+    <div className="avatar placeholder">
+      <div className="bg-neutral-focus text-neutral-content rounded-full w-10">
+        <span>
+          {getInitials(recipe.profiles.firstname, recipe.profiles.lastname)}
+        </span>
+      </div>
+    </div>
+  );
+};
+
 export default function PublicDetailRecipe() {
   const recipe = useLoaderData();
   const [isBookmarked, setIsBookmarked] = React.useState(false);
   const { addBookmark, removeBookmark, checkBookmark } = useBookmark();
   const { user } = useAuth();
   const navigate = useNavigate();
-
-  const ProfilePicture = () => {
-    if (recipe.profiles.avatar) {
-      return (
-        <img
-          src={`${AVATAR_IMAGE_URL}/${recipe.profiles.avatar}`}
-          alt="profile"
-          className="rounded-full w-10 h-10 object-cover"
-        />
-      );
-    }
-    return (
-      <div className="avatar placeholder">
-        <div className="bg-neutral-focus text-neutral-content rounded-full w-10">
-          <span>
-            {getInitials(recipe.profiles.firstname, recipe.profiles.lastname)}
-          </span>
-        </div>
-      </div>
-    );
-  };
 
   const checkIsBookmarked = async () => {
     const data = await checkBookmark(recipe.id, user.id);
@@ -92,7 +92,7 @@ export default function PublicDetailRecipe() {
                 <div className="flex flex-col gap-4">
                   <div className="flex items-center">
                     <div className="w-10 h-10 rounded-full">
-                      <ProfilePicture />
+                      <ProfilePicture recipe={recipe} />
                     </div>
                     <p className="ml-2">
                       By{" "}
