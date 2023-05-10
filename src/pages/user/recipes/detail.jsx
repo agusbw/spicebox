@@ -72,50 +72,119 @@ export default function UserDetailRecipe() {
                     </p>
                   </DetailRecipeContainer>
                   <DetailRecipeContainer>
-                    <h2 className="text-2xl font-oswald text-secondary">
+                    <h2 className="text-3xl font-oswald text-secondary">
                       Recipe Details
                     </h2>
-                    <p>
-                      {recipe.dish_types.length > 0 ? (
-                        <span>
-                          Dish Types:{" "}
-                          {recipe.dish_types.map((dish, index) => (
-                            <span
-                              key={index}
-                              className="badge badge-accent me-1"
-                            >
-                              {dish}{" "}
-                            </span>
-                          ))}
-                        </span>
-                      ) : (
-                        ""
-                      )}
-                    </p>
-                    <p>
-                      {recipe.serving_time
-                        ? `Cooking time: ${recipe.serving_time} minute(s)`
-                        : ""}
-                    </p>
-                    <p>
-                      {recipe.portion
-                        ? `Portion: ${recipe.portion} person(s)`
-                        : ""}
-                    </p>
-                    <p>
-                      {recipe.difficulty
-                        ? `Difficulty: ${recipe.difficulty}`
-                        : ""}
-                    </p>
-                    <p>
-                      Diets:{" "}
-                      {recipe.diets.length > 0 ? ` ${recipe.diets}` : "none"}
-                    </p>
-                    <p>
-                      Visibility:
-                      {recipe.is_public ? " Public" : " Private"}
-                    </p>
-                    <p>Halal: {recipe.is_halal ? " Yes" : " No"}</p>
+                    <div className="mt-3 flex-col flex">
+                      <div className="flex flex-col gap-1 md:flex-row md:gap-5">
+                        <div className="flex flex-col gap-1">
+                          <div className="flex gap-1">
+                            <div className="w-6 h-6 hover:bg-secondary-focus transition-all duration-300 bg-primary-focus rounded-full text-center flex justify-center items-center text-white font-bold text-xl">
+                              -
+                            </div>
+                            <p className="font-normal">
+                              <span className="font-semibold">
+                                Dish types:{" "}
+                              </span>
+                              {recipe.dish_types.length > 0 ? (
+                                <span>
+                                  {recipe.dish_types.map((dish, index) => (
+                                    <span
+                                      key={index}
+                                      className="badge badge-accent me-1"
+                                    >
+                                      {dish}{" "}
+                                    </span>
+                                  ))}
+                                </span>
+                              ) : (
+                                ""
+                              )}
+                            </p>
+                          </div>
+                          <div className="flex gap-1">
+                            <div className="w-6 h-6 hover:bg-secondary-focus transition-all duration-300 bg-primary-focus rounded-full text-center flex justify-center items-center text-white font-bold text-xl">
+                              -
+                            </div>
+                            <p className="font-normal">
+                              <span className="font-semibold">
+                                Serving time:{" "}
+                              </span>
+                              {recipe.serving_time
+                                ? `${recipe.serving_time} minute(s)`
+                                : ""}
+                            </p>
+                          </div>
+                          <div className="flex gap-1">
+                            <div className="w-6 h-6 hover:bg-secondary-focus transition-all duration-300 bg-primary-focus rounded-full text-center flex justify-center items-center text-white font-bold text-xl">
+                              -
+                            </div>
+                            <p className="font-normal">
+                              <span className="font-semibold">Portion: </span>
+                              {recipe.portion
+                                ? `${recipe.portion} person(s)`
+                                : ""}
+                            </p>
+                          </div>
+                          <div className="flex gap-1">
+                            <div className="w-6 h-6 hover:bg-secondary-focus transition-all duration-300 bg-primary-focus rounded-full text-center flex justify-center items-center text-white font-bold text-xl">
+                              -
+                            </div>
+                            <p className="font-normal">
+                              <span className="font-semibold">
+                                Difficulty:{" "}
+                              </span>
+                              {recipe.difficulty && (
+                                <span className="badge badge-primary">
+                                  {recipe.difficulty}
+                                </span>
+                              )}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex flex-col gap-1">
+                          <div className="flex gap-1">
+                            <div className="w-6 h-6 hover:bg-secondary-focus transition-all duration-300 bg-primary-focus rounded-full text-center flex justify-center items-center text-white font-bold text-xl">
+                              -
+                            </div>
+                            <p className="font-normal">
+                              <span className="font-semibold"> Diets: </span>
+                              {recipe.diets.length > 0
+                                ? ` ${recipe.diets}`
+                                : "none"}
+                            </p>
+                          </div>
+                          <div className="flex gap-1">
+                            <div className="w-6 h-6 hover:bg-secondary-focus transition-all duration-300 bg-primary-focus rounded-full text-center flex justify-center items-center text-white font-bold text-xl">
+                              -
+                            </div>
+                            <p className="font-normal">
+                              <span className="font-semibold">
+                                Visibility:{" "}
+                              </span>
+                              {recipe.is_public ? " Public" : " Private"}
+                            </p>
+                          </div>
+                          <div className="flex gap-1">
+                            <div className="w-6 h-6 hover:bg-secondary-focus transition-all duration-300 bg-primary-focus rounded-full text-center flex justify-center items-center text-white font-bold text-xl">
+                              -
+                            </div>
+                            <p className="font-normal">
+                              <span className="font-semibold">Halal: </span>
+                              {recipe.is_halal ? (
+                                <span className="badge badge-success">
+                                  Halal
+                                </span>
+                              ) : (
+                                <span className="badge badge-warning">
+                                  Non-Halal
+                                </span>
+                              )}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </DetailRecipeContainer>
                   <DetailRecipeContainer className="lg:hidden">
                     <div className="flex flex-col justify-center items-center mb-4">
