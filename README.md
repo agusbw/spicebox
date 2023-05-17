@@ -1,6 +1,6 @@
 # SpiceBox
 
-SpiceBox is helping users to create and save and share food recipes
+SpiceBox is helping users to create and save and share user's food recipes
 
 ## Authors
 
